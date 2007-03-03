@@ -1,0 +1,76 @@
+<& /Elements/Tabs,
+    actions => $actions,
+    current_toptab => $current_toptab,
+    current_tab => $current_tab,
+    tabs => $tabs,
+    Title => $Title,
+&>
+
+<%INIT>
+my $current_toptab = "Dist/ByMaintainer.html?Name=" . $session{'CurrentUser'}->UserObj->Name;
+
+my $tabs = {
+    A => {
+        title => loc('My Distributions'),
+        path => 'Dist/ByMaintainer.html?Name=' . $session{'CurrentUser'}->UserObj->Name,
+    },
+    B => {
+        title => loc('Search'),
+        path => 'Dist/Search.html',
+    },
+    C => {
+        title => loc('Browse'),
+        path => 'Dist/Browse.html',
+    },
+};
+
+if ($Queue) {
+    my $queue_display_path = 'Dist/Display.html?Queue=' . $m->interp->apply_escapes($Queue);
+    $tabs->{'H'} = {
+        title => $Queue,
+        path => $queue_display_path,
+    };
+    my $current_tab = $queue_display_path;
+}
+
+my $dist_subtabs = {
+    A => {
+        title   => loc("Active bugs"),
+        path    => "Dist/Display.html?Status=Active&Queue="
+                   . $m->interp->apply_escapes($Queue),
+    },
+    Ab => {
+        title   => loc("Resolved bugs"),
+        path    => "Dist/Display.html?Status=Resolved&Queue="
+                   . $m->interp->apply_escapes($Queue),
+    },
+    Ac => {
+        title   => loc("Rejected bugs"),
+        path    => "Dist/Display.html?Status=Rejected&Queue="
+                   . $m->interp->apply_escapes($Queue),
+    },
+    G => {
+        title   => loc("Report a new bug"),
+        path    => 'Ticket/Create.html?Queue='
+                    . $m->interp->apply_escapes($Queue),
+    },
+};
+
+# if we're looking at a page with a submenu, add it to the hash and set the
+# current tab
+if ($current_subtab =~ m!^(Dist/Display|Ticket/Create)\.html!) {
+    $tabs->{'H'}->{'subtabs'} = $dist_subtabs;
+    $tabs->{'H'}->{'current_subtab'} = $current_subtab;
+    $current_tab = 'Dist/Display.html?Queue=' . $m->interp->apply_escapes($Queue);
+}
+
+</%INIT>
+
+<%ARGS>
+$Queue => undef
+$actions => undef
+$subtabs => undef
+$current_tab => ''
+$current_subtab => ''
+$Title => undef
+</%ARGS>

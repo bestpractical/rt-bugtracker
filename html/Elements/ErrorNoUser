@@ -1,0 +1,15 @@
+<& /Elements/Header, Title => loc("Error") &>
+<& /Public/Elements/Tabs,
+        Title       => loc("Unable to find user"),
+        current_tab => '',
+        &>
+
+<p>
+  The user you specified, <strong><% $Name %></strong>, could not be found.
+</p>
+
+<& /Elements/Footer &>
+
+<%args>
+$Name => undef
+</%args>

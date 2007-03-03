@@ -1,0 +1,8 @@
+<%INIT>
+$toptabs->{Ag} = { title => loc('Distributions'),
+                   path => 'Dist/ByMaintainer.html?Name=' . $session{'CurrentUser'}->UserObj->Name,
+                 };
+</%INIT>
+<%ARGS>
+$toptabs => undef
+</%ARGS>

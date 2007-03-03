@@ -1,0 +1,12 @@
+abstract: Adds a UI designed for bug-tracking for developers to RT
+author: Kevin Riggle <kevinr@bestpractical.com>
+distribution_type: module
+generated_by: Module::Install version 0.63
+license: GPL version 2
+name: RT-BugTracker
+no_index: 
+  directory: 
+    - html
+    - inc
+    - t
+version: 0.01

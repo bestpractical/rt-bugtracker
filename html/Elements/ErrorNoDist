@@ -1,0 +1,22 @@
+<& /Elements/Header, Title => loc("Error") &>
+<& /Public/Elements/Tabs,
+        Title       => loc("Unable to find distribution"),
+        current_tab => '',
+        &>
+
+<p>
+% if ($Queue) {
+  The distribution you specified, <strong><% $Queue %></strong>, could not be found.
+% }
+% else {
+  No distribution specified.
+% }
+  Please use the search or new ticket form at the top of the page to find the distribution's
+  bug report page.
+</p>
+
+<& /Elements/Footer &>
+
+<%args>
+$Queue => undef
+</%args>

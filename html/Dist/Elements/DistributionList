@@ -1,0 +1,31 @@
+<div class="dist-list">
+<ul>
+% my $count  = $queues->Count;
+% my $broken = 0;
+%
+% while (my $queue = $queues->Next) {
+% 
+%     if ($count > 10
+%           and not $broken
+%           and $queues->_ItemsCounter >= $count / 2)
+%     {
+%         $broken = 1;
+</ul>
+
+<ul>
+%     }
+  <li>
+    <span class="dist-actions">
+      <a href="<% $RT::WebPath %>/Dist/Display.html?Queue=<% $queue->Name %>">Bug list</a>
+      &#8226;
+      <a href="<% $RT::WebPath %>/Ticket/Create.html?Queue=<% $queue->Name %>">Report a bug</a>
+    </span>
+    <strong><% $queue->Name %></strong>
+  </li>
+% }
+</ul>
+</div>
+
+<%args>
+$queues => undef
+</%args>
