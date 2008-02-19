@@ -1,7 +1,0 @@
-\.[^\/]+\.swp$
-^Makefile(\.old)?$
-^MANIFEST\.SKIP$
-\.bak$
-~$
-^blib
-^pm_to_blib$

@@ -1,10 +1,16 @@
+html/Callbacks/BugTracker/Elements/Tabs/Default
+html/Callbacks/BugTracker/Search/Simple.html/ModifyQuery
 html/Dist/BeginsWith.html
 html/Dist/Browse.html
 html/Dist/ByMaintainer.html
 html/Dist/Display.html
-html/Elements/DistributionList
+html/Dist/Elements/DistributionList
+html/Dist/Elements/Tabs
+html/Dist/Search.html
 html/Elements/ErrorNoDist
 html/Elements/ErrorNoUser
+html/Ticket/Create.html
+html/Ticket/Elements/ShowQueue
 inc/Module/Install.pm
 inc/Module/Install/Base.pm
 inc/Module/Install/Can.pm
