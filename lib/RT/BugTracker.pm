@@ -46,7 +46,9 @@
 # 
 # END BPS TAGGED BLOCK }}}
 package RT::BugTracker;
-our $VERSION = '0.02';
+
+use v5.8.3;
+our $VERSION = '0.03';
 
 1;
 
@@ -78,7 +80,7 @@ overriden. We currently in sync with RT 3.6.6.
 
 =head1 SEE ALSO
 
-L<RT::BugTracker::Public>, L<RT::BugTracker::rt_cpan_org>
+L<RT::BugTracker::Public>, L<RT::Extension::rt_cpan_org>
 
 =head1 AUTHOR
 

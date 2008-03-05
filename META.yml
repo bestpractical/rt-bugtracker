@@ -14,4 +14,6 @@ no_index:
     - html
     - inc
     - t
-version: 0.02
+requires: 
+  perl: 5.8.3
+version: 0.03
