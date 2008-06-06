@@ -105,15 +105,14 @@ my $current_subtab = "Dist/Display.html?Status="
 my ($base_url) = ($current_subtab =~ m|^Dist/(.+)$|);
 $base_url .= '&';
 
-my $Query;
+my $Query = "Queue = '$Queue'";
 if ($Status eq 'Active') {
-    $Query = "Queue = '$Queue' "
-             . "AND ( Status = 'new' OR Status = 'open' "
-             . "OR Status = 'stalled' )";
+    $Query .= " AND ( "
+        .join( ' OR ', map "Status = '$_'", @RT::ActiveStatus )
+        ." )";
 }
 else {
-    $Query = "Queue = '$Queue' "
-             . "AND Status = '" . $Status . q{'};
+    $Query .= " AND Status = '$Status'";
 }
 my $QueryString = "?".$m->comp('/Elements/QueryString',
                                Query => $Query,
