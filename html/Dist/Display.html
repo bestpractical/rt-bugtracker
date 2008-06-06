@@ -88,15 +88,11 @@ EOF
 
 my $QueueObj = RT::Queue->new($session{CurrentUser});
 $QueueObj->Load($Queue);
-
-if (not $QueueObj->Id) {
-    $m->comp('/Elements/ErrorNoDist', Queue => $Queue, %ARGS);
-    $m->abort();
-}
+return $m->comp('/Elements/ErrorNoDist', Queue => $Queue, %ARGS)
+    unless $QueueObj->id;
 
 if ($Status !~ /\w/) {
-    $m->comp('/Elements/Error', Why => q{no such status as '} . $Status . q{'});
-    $m->abort();
+    return $m->comp('/Elements/Error', Why => q{no such status as '} . $Status . q{'});
 }
 
 my $admincc = $QueueObj->AdminCc->UserMembersObj;
