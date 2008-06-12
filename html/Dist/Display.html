@@ -55,11 +55,9 @@
     Title => $Status . ' bugs for ' . $QueueObj->Name, 
 &>
 
-<h3>Maintainer</h3>
+<& /Dist/Elements/ShowMaintainers, Queue => $QueueObj &>
 
-<p><% $maint %></p>
-
-<h3>Bugs [<a href="<%$RSSFeedURL%>"><&|/l&>RSS</&></a>]</h3>
+<h3><% loc('Bugs') %> [<a href="<% $RSSFeedURL %>"><% loc('RSS') %></a>]</h3>
 
 <& /Elements/TicketList,
         OrderBy => $OrderBy,
@@ -94,9 +92,6 @@ return $m->comp('/Elements/ErrorNoDist', Queue => $Queue, %ARGS)
 if ($Status !~ /\w/) {
     return $m->comp('/Elements/Error', Why => q{no such status as '} . $Status . q{'});
 }
-
-my $admincc = $QueueObj->AdminCc->UserMembersObj;
-my $maint = join ", ", map { $_->Name } @{$admincc->ItemsArrayRef};
 
 my $current_subtab = "Dist/Display.html?Status="
                   . $m->interp->apply_escapes($Status, 'u') . "&Queue="
