@@ -45,14 +45,15 @@
 %# those contributions and any derivatives thereof.
 %# 
 %# END BPS TAGGED BLOCK }}}
-<& /Elements/Header, Title => $Status . ' bugs for ' . $QueueObj->Name, 
+<& /Elements/Header,
+    Title => $title,
     RSSAutoDiscovery => $RSSFeedURL,
 &>
 <& /Dist/Elements/Tabs, 
     current_tab => '/Dist/Display.html',
     current_subtab => $current_subtab,
     Queue => $Queue,
-    Title => $Status . ' bugs for ' . $QueueObj->Name, 
+    Title => $title,
 &>
 
 <& /Dist/Elements/ShowMaintainers, Queue => $QueueObj &>
@@ -60,19 +61,42 @@
 <h3><% loc('Bugs') %> [<a href="<% $RSSFeedURL %>"><% loc('RSS') %></a>]</h3>
 
 <& /Elements/TicketList,
-        OrderBy => $OrderBy,
-        Order   => $Order,
-        Query   => $Query,
-        Format  => $Format,
-        Rows => $Rows,
-        Page => $Page,
-        Name => $Queue,
-        AllowSorting => 1,
-        BaseURL => $base_url,
+    OrderBy => $OrderBy,
+    Order   => $Order,
+    Query   => $Query,
+    Format  => $Format,
+    Rows    => $Rows,
+    Page    => $Page,
+    Name    => $Queue,
+    AllowSorting => 1,
+    BaseURL => $base_url,
 &>
 
-<%init>
+<%INIT>
 $Queue =~ s/::/-/g;
+my $QueueObj = RT::Queue->new( $session{CurrentUser} );
+$QueueObj->Load( $Queue );
+unless ( $QueueObj->id ) {
+    $m->comp('/Public/Elements/ErrorNoDist', Queue => $Queue, %ARGS);
+    $m->abort();
+}
+
+unless ( ($Status||'') eq 'Active' || $QueueObj->IsValidStatus( $Status ) ) {
+    $m->comp('/Elements/Error', Why => q{no such status as '} . $Status . q{'});
+    $m->abort();
+}
+
+my $Query = "Queue = '$Queue'";
+if ( $Status eq 'Active' ) {
+    $Query .= " AND ( "
+        .join( ' OR ', map "Status = '$_'", $QueueObj->ActiveStatusArray )
+        ." )";
+}
+else {
+    $Query .= " AND Status = '$Status'";
+}
+
+my $title = loc( "$Status bugs for [_1]", $Name );
 
 my $Format = <<EOF;
 '<a href="$RT::WebPath/Ticket/Display.html?id=__id__">__id__</a>/TITLE:ID',
@@ -84,15 +108,6 @@ my $Format = <<EOF;
 '__CustomField.{Fixed in}__'
 EOF
 
-my $QueueObj = RT::Queue->new($session{CurrentUser});
-$QueueObj->Load($Queue);
-return $m->comp('/Elements/ErrorNoDist', Queue => $Queue, %ARGS)
-    unless $QueueObj->id;
-
-if ($Status !~ /\w/) {
-    return $m->comp('/Elements/Error', Why => q{no such status as '} . $Status . q{'});
-}
-
 my $current_subtab = "Dist/Display.html?Status="
                   . $m->interp->apply_escapes($Status, 'u') . "&Queue="
                   . $m->interp->apply_escapes($QueueObj->Name, 'u');
@@ -100,15 +115,6 @@ my $current_subtab = "Dist/Display.html?Status="
 my ($base_url) = ($current_subtab =~ m|^Dist/(.+)$|);
 $base_url .= '&';
 
-my $Query = "Queue = '$Queue'";
-if ($Status eq 'Active') {
-    $Query .= " AND ( "
-        .join( ' OR ', map "Status = '$_'", @RT::ActiveStatus )
-        ." )";
-}
-else {
-    $Query .= " AND Status = '$Status'";
-}
 my $QueryString = "?".$m->comp('/Elements/QueryString',
                                Query => $Query,
                                Format => $Format,
@@ -118,13 +124,12 @@ my $QueryString = "?".$m->comp('/Elements/QueryString',
                                Page => $Page);
 my $ShortQueryString = "?".$m->comp('/Elements/QueryString', Query => $Query);
 my $RSSFeedURL = "$RT::WebPath/Search/Results.rdf$ShortQueryString";
-</%init>
-
-<%args>
+</%INIT>
+<%ARGS>
 $Queue => undef
 $Order => 'DESC'
 $OrderBy => 'LastUpdated'
 $Rows => undef
 $Page => 1
 $Status => 'Active'
-</%args>
+</%ARGS>
