@@ -1,0 +1,13 @@
+<h3><% loc('Maintainer(s)') %></h3>
+
+<p><% $maint %></p>
+
+<%ARGS>
+$Queue
+</%ARGS>
+<%INIT>
+
+my $admincc = $QueueObj->AdminCc->UserMembersObj;
+my $maint = join ", ", map $_->Name, @{$admincc->ItemsArrayRef};
+
+</%INIT>
