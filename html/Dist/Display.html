@@ -52,7 +52,7 @@
 <& /Dist/Elements/Tabs, 
     current_tab => '/Dist/Display.html',
     current_subtab => $current_subtab,
-    Queue => $Queue,
+    Queue => $Name,
     Title => $title,
 &>
 
@@ -67,17 +67,18 @@
     Format  => $Format,
     Rows    => $Rows,
     Page    => $Page,
-    Name    => $Queue,
+    Name    => $Name,
     AllowSorting => 1,
     BaseURL => $base_url,
 &>
 
 <%INIT>
-$Queue =~ s/::/-/g;
+$Name = $Queue unless $Name;
+$Name =~ s/::/-/g;
 my $QueueObj = RT::Queue->new( $session{CurrentUser} );
-$QueueObj->Load( $Queue );
+$QueueObj->Load( $Name );
 unless ( $QueueObj->id ) {
-    $m->comp('/Public/Elements/ErrorNoDist', Queue => $Queue, %ARGS);
+    $m->comp('/Public/Elements/ErrorNoDist', Queue => $Name, %ARGS);
     $m->abort();
 }
 
@@ -86,7 +87,7 @@ unless ( ($Status||'') eq 'Active' || $QueueObj->IsValidStatus( $Status ) ) {
     $m->abort();
 }
 
-my $Query = "Queue = '$Queue'";
+my $Query = "Queue = '$Name'";
 if ( $Status eq 'Active' ) {
     $Query .= " AND ( "
         .join( ' OR ', map "Status = '$_'", $QueueObj->ActiveStatusArray )
@@ -108,24 +109,19 @@ my $Format = <<EOF;
 '__CustomField.{Fixed in}__'
 EOF
 
-my $current_subtab = "Dist/Display.html?Status="
-                  . $m->interp->apply_escapes($Status, 'u') . "&Queue="
-                  . $m->interp->apply_escapes($QueueObj->Name, 'u');
+my $current_subtab = "Dist/Display.html"
+    ."?Status=". $m->interp->apply_escapes($Status, 'u')
+    ."&Queue=". $m->interp->apply_escapes($QueueObj->Name, 'u');
 
 my ($base_url) = ($current_subtab =~ m|^Dist/(.+)$|);
 $base_url .= '&';
 
-my $QueryString = "?".$m->comp('/Elements/QueryString',
-                               Query => $Query,
-                               Format => $Format,
-                               Rows => $Rows,
-                               OrderBy => $OrderBy,
-                               Order => $Order,
-                               Page => $Page);
 my $ShortQueryString = "?".$m->comp('/Elements/QueryString', Query => $Query);
 my $RSSFeedURL = "$RT::WebPath/Search/Results.rdf$ShortQueryString";
 </%INIT>
 <%ARGS>
+$Name => undef
+# Queue is an alias for Name, Name has higher precendance
 $Queue => undef
 $Order => 'DESC'
 $OrderBy => 'LastUpdated'
