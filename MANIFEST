@@ -6,6 +6,9 @@ html/Dist/Browse.html
 html/Dist/ByMaintainer.html
 html/Dist/Display.html
 html/Dist/Elements/DistributionList
+html/Dist/Elements/ShowBugs
+html/Dist/Elements/ShowMaintainers
+html/Dist/Elements/ShowNotes
 html/Dist/Elements/Tabs
 html/Dist/Search.html
 html/Elements/ErrorNoDist
