@@ -49,6 +49,7 @@
     Title => $title,
     RSSAutoDiscovery => $RSSFeedURL,
 &>
+
 <& /Dist/Elements/Tabs, 
     current_tab => '/Dist/Display.html',
     current_subtab => $current_subtab,
@@ -58,17 +59,10 @@
 
 <& /Dist/Elements/ShowMaintainers, Queue => $QueueObj &>
 
-<h3><% loc('Bugs') %> [<a href="<% $RSSFeedURL %>"><% loc('RSS') %></a>]</h3>
-
-<& /Elements/TicketList,
-    OrderBy => $OrderBy,
-    Order   => $Order,
-    Query   => $Query,
-    Format  => $Format,
-    Rows    => $Rows,
-    Page    => $Page,
-    Name    => $Name,
-    AllowSorting => 1,
+<& /Dist/Elements/ShowBugs,
+    %ARGS,
+    Queue   => $QueueObj,
+    Status  => $Status,
     BaseURL => $base_url,
 &>
 
@@ -81,33 +75,9 @@ unless ( $QueueObj->id ) {
     $m->comp('/Public/Elements/ErrorNoDist', Queue => $Name, %ARGS);
     $m->abort();
 }
-
-unless ( ($Status||'') eq 'Active' || $QueueObj->IsValidStatus( $Status ) ) {
-    $m->comp('/Elements/Error', Why => q{no such status as '} . $Status . q{'});
-    $m->abort();
-}
-
-my $Query = "Queue = '$Name'";
-if ( $Status eq 'Active' ) {
-    $Query .= " AND ( "
-        .join( ' OR ', map "Status = '$_'", $QueueObj->ActiveStatusArray )
-        ." )";
-}
-else {
-    $Query .= " AND Status = '$Status'";
-}
+$ARGS{'Name'} = $Name = $QueueObj->Name;
 
 my $title = loc( "$Status bugs for [_1]", $Name );
-
-my $Format = <<EOF;
-'<a href="$RT::WebPath/Ticket/Display.html?id=__id__">__id__</a>/TITLE:ID',
-'<b><a href="$RT::WebPath/Ticket/Display.html?id=__id__">__Subject__</a></b>/TITLE:Subject',
-'__Status__',
-'__CustomField.{Severity}__',
-'<small>__LastUpdatedRelative__</small>',
-'__CustomField.{Broken in}__',
-'__CustomField.{Fixed in}__'
-EOF
 
 my $current_subtab = "Dist/Display.html"
     ."?Status=". $m->interp->apply_escapes($Status, 'u')
@@ -116,16 +86,15 @@ my $current_subtab = "Dist/Display.html"
 my ($base_url) = ($current_subtab =~ m|^Dist/(.+)$|);
 $base_url .= '&';
 
-my $ShortQueryString = "?".$m->comp('/Elements/QueryString', Query => $Query);
-my $RSSFeedURL = "$RT::WebPath/Search/Results.rdf$ShortQueryString";
+my $RSSFeedURL = $m->comp('/Dist/Elements/ShowBugs:RSS',
+    Queue  => $QueueObj,
+    Status => $Status,
+);
+
 </%INIT>
 <%ARGS>
-$Name => undef
+$Name   => undef
 # Queue is an alias for Name, Name has higher precendance
-$Queue => undef
-$Order => 'DESC'
-$OrderBy => 'LastUpdated'
-$Rows => undef
-$Page => 1
+$Queue  => undef
 $Status => 'Active'
 </%ARGS>
