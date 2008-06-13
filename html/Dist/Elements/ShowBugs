@@ -16,12 +16,12 @@
 &>
 
 <%INIT>
-unless ( ($Status||'') eq 'Active' || $Queue->IsValidStatus( $Status ) ) {
+unless ( ($Status||'') eq 'Active' || $Queue->IsValidStatus( lc $Status ) ) {
     $m->comp('/Elements/Error', Why => q{no such status as '} . $Status . q{'});
     $m->abort();
 }
 
-my $Query = "Queue = '$Name'";
+my $Query = "Queue = '". $Queue->Name ."'";
 if ( $Status eq 'Active' ) {
     $Query .= " AND ( "
         .join( ' OR ', map "Status = '$_'", $Queue->ActiveStatusArray )
@@ -70,7 +70,7 @@ if ( $Query ) {
         . $m->comp('/Elements/QueryString', Query => $Query);
 }
 
-unless ( ($Status||'') eq 'Active' || $Queue->IsValidStatus( $Status ) ) {
+unless ( ($Status||'') eq 'Active' || $Queue->IsValidStatus( lc $Status ) ) {
     $m->comp('/Elements/Error', Why => q{no such status as '} . $Status . q{'});
     $m->abort();
 }

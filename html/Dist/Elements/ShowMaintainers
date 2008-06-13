@@ -7,7 +7,7 @@ $Queue
 </%ARGS>
 <%INIT>
 
-my $admincc = $QueueObj->AdminCc->UserMembersObj;
+my $admincc = $Queue->AdminCc->UserMembersObj;
 my $maint = join ", ", map $_->Name, @{$admincc->ItemsArrayRef};
 
 </%INIT>
