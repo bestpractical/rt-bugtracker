@@ -71,6 +71,18 @@ my $tabs = {
     },
 };
 
+my $queue_obj;
+if ( $Queue ) {
+    my $tmp = RT::Queue->new( $session{'CurrentUser'} );
+    $tmp->Load( $Queue );
+    unless ( $tmp->id ) {
+        $RT::Logger->warning( "Couldn't load queue '$Queue'");
+    } else {
+        $queue_obj = $tmp;
+    }
+    $Queue = $queue_obj->Name;
+}
+
 my $escaped_queue = $m->interp->apply_escapes( $Queue, 'u' );
 
 if ($Queue) {
@@ -94,11 +106,25 @@ my $dist_subtabs = {
         title   => loc("Rejected bugs"),
         path    => "Dist/Display.html?Status=Rejected&Queue=". $escaped_queue,
     },
-    G => {
+};
+
+if ( $queue_obj && !$queue_obj->Disabled ) {
+    $dist_subtabs->{'G'} = {
         title   => loc("Report a new bug"),
         path    => 'Ticket/Create.html?Queue='. $escaped_queue,
-    },
-};
+    };
+}
+
+if ( $queue_obj
+    && (
+       $queue_obj->IsAdminCc( $session{'CurrentUser'}->id )
+    || $queue_obj->CurrentUserHasRight('AdminQueue') )
+{
+    $dist_subtabs->{'J'} = {
+        title   => loc("Manage"),
+        path    => 'Dist/Manage.html?Queue='. $escaped_queue,
+    };
+}
 
 # if we're looking at a page with a submenu, add it to the hash and set the
 # current tab
