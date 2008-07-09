@@ -1,0 +1,14 @@
+<& /Dist/Elements/Header, Title => loc("Error") &>
+
+<& /Dist/Elements/Tabs,
+    Title       => loc("Queue for the distribution is disabled"),
+    current_tab => '',
+&>
+
+<& /Dist/Elements/ShowNotes, Queue => $Queue &>
+
+<& /Elements/Footer &>
+
+<%args>
+$Queue => undef
+</%args>
