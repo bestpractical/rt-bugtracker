@@ -1,0 +1,46 @@
+<% loc('Additional addresses RT should notify') %>:
+<textarea cols="120" rows="10" name="Queue-<% $Queue->id %>-NotifyAddresses"><% join ', ', @$value %></textarea><br />
+<%ARGS>
+$Queue => undef
+</%ARGS>
+<%INIT>
+my $value = $Queue->FirstAttribute('NotifyAddresses');
+$value = $value->Content if $value;
+$value ||= [];
+</%INIT>
+
+<%METHOD Process>
+<%ARGS>
+$Queue => undef
+</%ARGS>
+<%INIT>
+return () unless exists $ARGS{'Queue-'. $Queue->id .'-NotifyAddresses'};
+my $value = $ARGS{'Queue-'. $Queue->id .'-NotifyAddresses'};
+
+my @addrs = grep /\@/, map $_->address, grep defined, Mail::Address->parse( $value );
+
+my ($status, $msg, $result);
+if ( @addrs ) {
+    ($status, $msg) = $Queue->SetAttribute(
+        Name        => 'NotifyAddresses',
+        Description => 'List of addresses we should notify',
+        Content     => \@addrs,
+    );
+    $RT::Logger->error("Couldn't set attribute: $msg")
+        unless $status;
+
+    $result = loc("Updated list of additional addresses RT should notify");
+} else {
+    ($status, $msg) = $Queue->DeleteAttribute( 'NotifyAddresses' );
+    $RT::Logger->error("Couldn't delete attribute: $msg")
+        unless $status;
+
+    $result = loc("Deleted all additional addresses");
+}
+return loc("System error. Couldn't set addresses.")
+    unless $status;
+
+return $result;
+
+</%INIT>
+</%METHOD>
