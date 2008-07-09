@@ -1,0 +1,45 @@
+<% loc('Distribution notes') %>:
+<textarea cols="120" rows="20" name="Queue-<% $Queue->id %>-Notes"><% $value %></textarea><br />
+<%ARGS>
+$Queue => undef
+</%ARGS>
+<%INIT>
+my $value = $Queue->FirstAttribute('DistributionNotes');
+$value = $value->Content if $value;
+$value = '' unless defined $value;
+</%INIT>
+
+<%METHOD Process>
+<%ARGS>
+$Queue => undef
+</%ARGS>
+<%INIT>
+return () unless exists $ARGS{'Queue-'. $Queue->id .'-Notes'};
+my $value = $ARGS{'Queue-'. $Queue->id .'-Notes'};
+$value = $m->comp('/Elements/ScrubHTML', Content => $value );
+
+my ($status, $msg, $result);
+if ( defined $value && length $value ) {
+    ($status, $msg) = $Queue->SetAttribute(
+        Name        => 'DistributionNotes',
+        Description => 'A html block with distribution notes',
+        Content     => $value,
+    );
+    $RT::Logger->error("Couldn't set attribute: $msg")
+        unless $status;
+
+    $result = loc("Updated distribution notes");
+} else {
+    ($status, $msg) = $Queue->DeleteAttribute( 'DistributionNotes' );
+    $RT::Logger->error("Couldn't delete attribute: $msg")
+        unless $status;
+
+    $result = loc("Deleted distribution notes");
+}
+return loc("System error. Couldn't set notes for the distribution.")
+    unless $status;
+
+return $result;
+
+</%INIT>
+</%METHOD>

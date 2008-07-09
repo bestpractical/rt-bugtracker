@@ -1,12 +1,20 @@
 % if ( $Queue->Disabled ) {
-<h3>WARNING: Queue is disabled</h3>
+<h3><% loc('WARNING: Queue is disabled') %></h3>
 
-<p>This queue has been disabled by maintainers' request. Heh, it's still possible to create bugs using UI and may be email address, but we <b>beg you</b> "don't create new tickets". Instead read distribution's documentation and figure out how to report issues properly.</p>
-
-<p>Sorry for this. Later we'll provid more info here and disable creation of reports entirly.</p>
+<p>This queue has been disabled by maintainers' request. Heh, it's still possible to create bugs using email address, but we <b>beg you</b> "don't create new tickets". Instead read distribution's documentation and figure out how to report issues properly.</p>
 % }
+
+% if ( defined $notes ) {
+<h3><% loc("Maintainer(s)' notes") %></h3>
+
+<p><% $notes |n %></p>
+% }
+
 <%ARGS>
 $Queue
 </%ARGS>
 <%INIT>
+my $notes = $Queue->FirstAttribute( 'DistributionNotes' );
+$notes = $notes->Content if $notes;
+$notes = undef if defined $notes && !length $notes;
 </%INIT>
