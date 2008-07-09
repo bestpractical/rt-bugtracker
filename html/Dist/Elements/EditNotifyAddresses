@@ -31,6 +31,8 @@ if ( @addrs ) {
 
     $result = loc("Updated list of additional addresses RT should notify");
 } else {
+    return () unless $Queue->FirstAttribute( 'NotifyAddresses' );
+
     ($status, $msg) = $Queue->DeleteAttribute( 'NotifyAddresses' );
     $RT::Logger->error("Couldn't delete attribute: $msg")
         unless $status;
