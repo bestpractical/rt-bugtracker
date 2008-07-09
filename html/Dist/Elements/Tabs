@@ -118,7 +118,7 @@ if ( $queue_obj && !$queue_obj->Disabled ) {
 if ( $queue_obj
     && (
        $queue_obj->IsAdminCc( $session{'CurrentUser'}->id )
-    || $queue_obj->CurrentUserHasRight('AdminQueue') )
+    || $queue_obj->CurrentUserHasRight('AdminQueue') ) )
 {
     $dist_subtabs->{'J'} = {
         title   => loc("Manage"),
