@@ -1,0 +1,13 @@
+<%args>
+$ARGSRef
+</%args>
+<%init>
+my $Queue = $ARGSRef->{Queue}
+    or return;
+
+my $QueueObj = RT::Queue->new($session{CurrentUser});
+$QueueObj->Load($Queue);
+</%init>
+
+<& /Dist/Elements/ShowNotes, Queue => $QueueObj &>
+
