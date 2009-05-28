@@ -45,6 +45,8 @@
 %# those contributions and any derivatives thereof.
 %# 
 %# END BPS TAGGED BLOCK }}}
+%# This is probably fine to leave as an overriding template. The 3.6 and 3.8
+%# have no real logic to them.
 <a href="<% $RT::WebPath %>/Dist/Display.html?Queue=<% $name |uhn %>"><% $name %></a>
 <%ARGS>
 $QueueObj
