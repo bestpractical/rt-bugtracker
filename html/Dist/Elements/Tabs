@@ -73,6 +73,8 @@ my $tabs = {
 
 my $queue_obj;
 if ( $Queue ) {
+    $Queue = $Queue->Id if ref($Queue);
+
     my $tmp = RT::Queue->new( $session{'CurrentUser'} );
     $tmp->Load( $Queue );
     unless ( $tmp->id ) {
