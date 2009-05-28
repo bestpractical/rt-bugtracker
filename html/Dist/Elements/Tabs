@@ -73,16 +73,19 @@ my $tabs = {
 
 my $queue_obj;
 if ( $Queue ) {
-    $Queue = $Queue->Id if ref($Queue);
-
-    my $tmp = RT::Queue->new( $session{'CurrentUser'} );
-    $tmp->Load( $Queue );
-    unless ( $tmp->id ) {
-        $RT::Logger->warning( "Couldn't load queue '$Queue'");
-    } else {
-        $queue_obj = $tmp;
+    if (ref($Queue)) {
+        $Queue = $Queue->Name;
     }
-    $Queue = $queue_obj->Name;
+    else {
+        my $tmp = RT::Queue->new( $session{'CurrentUser'} );
+        $tmp->Load( $Queue );
+        unless ( $tmp->id ) {
+            $RT::Logger->warning( "Couldn't load queue '$Queue'");
+        } else {
+            $queue_obj = $tmp;
+        }
+        $Queue = $queue_obj->Name;
+    }
 }
 
 my $escaped_queue = $m->interp->apply_escapes( $Queue, 'u' );
