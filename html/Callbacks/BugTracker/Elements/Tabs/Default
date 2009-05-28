@@ -46,9 +46,12 @@
 %# 
 %# END BPS TAGGED BLOCK }}}
 <%INIT>
-$toptabs->{Ag} = { title => loc('Distributions'),
-                   path => 'Dist/ByMaintainer.html?Name=' . $session{'CurrentUser'}->UserObj->Name,
-                 };
+my $Name = $session{'CurrentUser'}->UserObj->Name;
+
+$toptabs->{Ag} = {
+    title => loc('Distributions'),
+    path  => 'Dist/ByMaintainer.html?Name=' . $Name,
+};
 </%INIT>
 <%ARGS>
 $toptabs => undef
