@@ -1,19 +1,23 @@
---- 
-abstract: Adds a UI designed for bug-tracking for developers to RT
-author: 
-  - Kevin Riggle <kevinr@bestpractical.com>
+---
+abstract: 'Adds a UI designed for bug-tracking for developers to RT'
+author:
+  - 'Kevin Riggle <kevinr@bestpractical.com>'
+build_requires:
+  ExtUtils::MakeMaker: 6.42
+configure_requires:
+  ExtUtils::MakeMaker: 6.42
 distribution_type: module
-generated_by: Module::Install version 0.68
-license: GPL version 2
-meta-spec: 
-  url: http://module-build.sourceforge.net/META-spec-v1.3.html
-  version: 1.3
+generated_by: 'Module::Install version 0.89'
+license: 'GPL version 2'
+meta-spec:
+  url: http://module-build.sourceforge.net/META-spec-v1.4.html
+  version: 1.4
 name: RT-BugTracker
-no_index: 
-  directory: 
+no_index:
+  directory:
+    - etc
     - html
     - inc
-    - t
-requires: 
+requires:
   perl: 5.8.3
 version: 0.03
