@@ -45,12 +45,14 @@
 # those contributions and any derivatives thereof.
 # 
 # END BPS TAGGED BLOCK }}}
+
+use strict;
+use warnings;
+
 package RT::BugTracker;
 
-use v5.8.3;
+use 5.008003;
 our $VERSION = '0.03';
-
-1;
 
 =head1 NAME
 
@@ -78,6 +80,72 @@ overriden. We currently in sync with RT 3.6.6.
 
 =back
 
+=cut
+
+require RT::Queue;
+package RT::Queue;
+
+sub DistributionNotes {
+    return (shift)->_AttributeBasedField(
+        DistributionNotes => @_
+    );
+}
+
+sub SetDistributionNotes {
+    return (shift)->_SetAttributeBasedField(
+        DistributionNotes => @_
+    );
+}
+
+sub NotifyAddresses {
+    return (shift)->_AttributeBasedField(
+        NotifyAddresses => @_
+    ) || [];
+}
+
+sub SetNotifyAddresses {
+    return (shift)->_SetAttributeBasedField(
+        NotifyAddresses => @_
+    );
+}
+
+sub _AttributeBasedField {
+    my $self = shift;
+    my $name = shift;
+
+    return undef unless $self->CurrentUserHasRight('SeeQueue');
+
+    my $attr = $self->FirstAttribute( $name )
+        or return undef;
+    return $attr->Content;
+}
+
+sub _SetAttributeBasedField {
+    my $self = shift;
+    my $name = shift;
+    my $value = shift;
+
+#    return ( 0, $self->loc('Permission Denied') )
+#        unless $self->CurrentUserHasRight('AdminQueue');
+
+    my ($status, $msg);
+    if ( defined $value && length $value ) {
+        ($status, $msg) = $self->SetAttribute(
+            Name    => $name,
+            Content => $value,
+        );
+    } else {
+        return (1, $self->loc("[_1] changed", $self->loc($name)))
+            unless $self->FirstAttribute( $name );
+        ($status, $msg) = $self->DeleteAttribute( $name );
+    }
+    unless ( $status ) {
+        $RT::Logger->error( "Couldn't change attribute '$name': $msg");
+        return (0, $self->loc("System error. Couldn't change [_1].", $self->loc($name)));
+    }
+    return ( 1, $self->loc("[_1] changed", $self->loc($name)) );
+}
+
 =head1 SEE ALSO
 
 L<RT::BugTracker::Public>, L<RT::Extension::rt_cpan_org>
@@ -87,3 +155,5 @@ L<RT::BugTracker::Public>, L<RT::Extension::rt_cpan_org>
 Kevin Riggle E<lt>kevinr@bestpractical.comE<gt>
 
 =cut
+
+1;
