@@ -18,11 +18,8 @@ notifies those recipients.
 
 sub SetRecipients {
     my $self = shift;
-    my $attr = $self->TicketObj->QueueObj->FirstAttribute('NotifyAddresses');
-    return unless $attr;
-    my $addresses = $attr->Content;
+    my $addresses = $self->TicketObj->QueueObj->NotifyAddresses;
     return unless $addresses && @$addresses;
-
     $self->{'To'} = [ @$addresses ];
 }
 

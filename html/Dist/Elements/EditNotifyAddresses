@@ -4,9 +4,7 @@
 $Queue => undef
 </%ARGS>
 <%INIT>
-my $value = $Queue->FirstAttribute('NotifyAddresses');
-$value = $value->Content if $value;
-$value ||= [];
+my $value = $Queue->NotifyAddresses;
 </%INIT>
 
 <%METHOD Process>
@@ -17,32 +15,12 @@ $Queue => undef
 return () unless exists $ARGS{'Queue-'. $Queue->id .'-NotifyAddresses'};
 my $value = $ARGS{'Queue-'. $Queue->id .'-NotifyAddresses'};
 
-my @addrs = grep /\@/, map $_->address, grep defined, Mail::Address->parse( $value );
+my @addrs = grep /\@/, map $_->address, grep defined,
+    Mail::Address->parse( $value );
 
-my ($status, $msg, $result);
-if ( @addrs ) {
-    ($status, $msg) = $Queue->SetAttribute(
-        Name        => 'NotifyAddresses',
-        Description => 'List of addresses we should notify',
-        Content     => \@addrs,
-    );
-    $RT::Logger->error("Couldn't set attribute: $msg")
-        unless $status;
-
-    $result = loc("Updated list of additional addresses RT should notify");
-} else {
-    return () unless $Queue->FirstAttribute( 'NotifyAddresses' );
-
-    ($status, $msg) = $Queue->DeleteAttribute( 'NotifyAddresses' );
-    $RT::Logger->error("Couldn't delete attribute: $msg")
-        unless $status;
-
-    $result = loc("Deleted all additional addresses");
-}
-return loc("System error. Couldn't set addresses.")
-    unless $status;
-
-return $result;
-
+my ($status, $msg) = $Queue->SetNotifyAddresses(
+    @addrs? \@addrs : undef
+);
+return $msg;
 </%INIT>
 </%METHOD>
