@@ -173,6 +173,7 @@ package RT::Action::SendEmail;
 my $tag_re = RT::Queue->SubjectTagRE;
 $RT::EmailSubjectTagRegex = qr/\Q$RT::rtname\E(?:\s+$tag_re+)?/;
 
+no warnings 'redefine';
 my $old = \&SetSubjectToken;
 *RT::Action::SendEmail::SetSubjectToken = sub {
     my $self = shift;
