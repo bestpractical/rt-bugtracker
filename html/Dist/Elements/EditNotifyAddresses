@@ -18,6 +18,8 @@ my $value = $ARGS{'Queue-'. $Queue->id .'-NotifyAddresses'};
 my @addrs = grep /\@/, map $_->address, grep defined,
     Mail::Address->parse( $value );
 
+return () if join(',', @{$Queue->NotifyAddresses}) eq join(',', @addrs);
+
 my ($status, $msg) = $Queue->SetNotifyAddresses(
     @addrs? \@addrs : undef
 );

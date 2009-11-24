@@ -1,4 +1,4 @@
-<% loc('Distribution notes') %>:
+<% loc('Distribution notes') %> (<% loc('HTML subset allowed') %>):
 <textarea cols="120" rows="20" name="Queue-<% $Queue->id %>-Notes"><% $value %></textarea><br />
 <%ARGS>
 $Queue => undef
@@ -16,6 +16,8 @@ return () unless exists $ARGS{'Queue-'. $Queue->id .'-Notes'};
 
 my $value = $ARGS{'Queue-'. $Queue->id .'-Notes'};
 $value = $m->comp('/Elements/ScrubHTML', Content => $value );
+
+return () if ($Queue->DistributionNotes || '') eq ($value || '');
 
 my ($status, $msg) = $Queue->SetDistributionNotes( $value );
 return $msg;
