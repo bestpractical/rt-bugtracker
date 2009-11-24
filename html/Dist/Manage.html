@@ -18,6 +18,8 @@
 
 <& /Dist/Elements/EditNotifyAddresses, Queue => $QueueObj &>
 
+<& /Dist/Elements/EditSubjectTag, Queue => $QueueObj &>
+
 <& /Elements/Submit, Label => loc('Save Changes'), Name => 'Update' &>
 
 </form>
@@ -41,7 +43,7 @@ unless ( $QueueObj->IsAdminCc( $session{'CurrentUser'}->id )
 }
 
 my @results;
-foreach ( qw(Notes NotifyAddresses) ) {
+foreach ( qw(Notes NotifyAddresses SubjectTag) ) {
     push @results, $m->comp(
         '/Dist/Elements/Edit'. $_ .':Process',
         %ARGS,
