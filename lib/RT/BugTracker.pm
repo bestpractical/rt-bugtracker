@@ -109,6 +109,27 @@ sub SetNotifyAddresses {
     );
 }
 
+# XXX: should go with 3.8 port
+sub SubjectTagRE {
+    return qr/[a-z0-9 ._-]/i;
+}
+sub SubjectTag {
+    return (shift)->_AttributeBasedField(
+        SubjectTag => @_
+    ) || '';
+}
+sub SetSubjectTag {
+    my ($self, $value) = (shift, shift);
+    if ( defined $value ) {
+        my $re = $self->SubjectTagRE;
+        return (0, $self->loc("Invalid characters in SubjectTag"))
+            unless $value =~ /^$re*$/;
+    }
+    return $self->_SetAttributeBasedField(
+        SubjectTag => $value, @_
+    );
+}
+
 sub _AttributeBasedField {
     my $self = shift;
     my $name = shift;
@@ -145,6 +166,30 @@ sub _SetAttributeBasedField {
     }
     return ( 1, $self->loc("[_1] changed", $self->loc($name)) );
 }
+
+require RT::Action::SendEmail;
+package RT::Action::SendEmail;
+
+my $tag_re = RT::Queue->SubjectTagRE;
+$RT::EmailSubjectTagRegex = qr/\Q$RT::rtname\E(?:\s+$tag_re+)?/;
+
+my $old = \&SetSubjectToken;
+*RT::Action::SendEmail::SetSubjectToken = sub {
+    my $self = shift;
+    $old->($self, @_);
+
+    my $tag = $self->TicketObj->QueueObj->SubjectTag;
+    return unless defined $tag && length $tag;
+
+    my $id = $self->TicketObj->id;
+    my $head = $self->TemplateObj->MIMEObj->head;
+    my $subject = $head->get('Subject');
+    my $tmp = $subject;
+    $tmp =~ s{\[\Q$RT::rtname\E\s+#$id\]}{[$RT::rtname $tag #$id]}i;
+    return if $tmp eq $subject;
+
+    $head->replace( Subject => $tmp );
+};
 
 =head1 SEE ALSO
 
