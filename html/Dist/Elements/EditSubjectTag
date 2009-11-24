@@ -1,0 +1,24 @@
+<% loc('Subject tag in addition to default') %>
+(<% loc('be reasonable') %>):
+<input size="120" name="Queue-<% $Queue->id %>-SubjectTag" value="<% $value || '' %>" /><br />
+<%ARGS>
+$Queue => undef
+</%ARGS>
+<%INIT>
+my $value = $Queue->SubjectTag;
+</%INIT>
+
+<%METHOD Process>
+<%ARGS>
+$Queue => undef
+</%ARGS>
+<%INIT>
+return () unless exists $ARGS{'Queue-'. $Queue->id .'-SubjectTag'};
+my $value = $ARGS{'Queue-'. $Queue->id .'-SubjectTag'};
+
+return () if ($Queue->SubjectTag || '') eq ($value || '');
+
+my ($status, $msg) = $Queue->SetSubjectTag( $value );
+return $msg;
+</%INIT>
+</%METHOD>
