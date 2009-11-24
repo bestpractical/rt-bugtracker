@@ -1,5 +1,6 @@
 Changes
 etc/initialdata
+html/Callbacks/BugTracker/autohandler/Default
 html/Callbacks/BugTracker/Elements/Tabs/Default
 html/Callbacks/BugTracker/Search/Simple.html/ModifyQuery
 html/Callbacks/BugTracker/Ticket/Create.html/FormStart
@@ -10,6 +11,7 @@ html/Dist/Display.html
 html/Dist/Elements/DistributionList
 html/Dist/Elements/EditNotes
 html/Dist/Elements/EditNotifyAddresses
+html/Dist/Elements/EditSubjectTag
 html/Dist/Elements/ErrorDisabled
 html/Dist/Elements/ShowBugs
 html/Dist/Elements/ShowMaintainers

@@ -1,3 +1,10 @@
+0.05 2009-11-24
+
+    Features:
+
+    * subject tag per distribution, partial port from RT 3.8
+    * maintainers listed with links to distribution by maintainer
+
 0.04 2009-11-24
 
     Features:
