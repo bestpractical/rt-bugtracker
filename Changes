@@ -1,3 +1,20 @@
+0.04 2009-11-24
+
+    Features:
+
+    * add 'Manage' menu for distribution with:
+    ** ability to notify additional addresses
+    ** distribution notes from maintainers
+    * Maintainers block
+
+    Fixes:
+
+    * better handling of disabled queues
+    * use ActiveStatus from the config
+    * don't use abort as it hides footer and
+      breaks validity of html
+    * more code reuse with RT-BugTracker-Public
+
 0.03 Wed Mar 5 13:36:42 UTC 2008
 
     * intial release to the CPAN
