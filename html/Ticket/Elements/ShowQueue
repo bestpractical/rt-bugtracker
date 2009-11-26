@@ -1,8 +1,8 @@
 %# BEGIN BPS TAGGED BLOCK {{{
 %# 
 %# COPYRIGHT:
-%#  
-%# This software is Copyright (c) 1996-2007 Best Practical Solutions, LLC 
+%# 
+%# This software is Copyright (c) 1996-2009 Best Practical Solutions, LLC
 %#                                          <jesse@bestpractical.com>
 %# 
 %# (Except where explicitly superseded by other copyright notices)
@@ -47,10 +47,12 @@
 %# END BPS TAGGED BLOCK }}}
 %# This is probably fine to leave as an overriding template. The 3.6 and 3.8
 %# have no real logic to them.
-<a href="<% $RT::WebPath %>/Dist/Display.html?Queue=<% $name |uhn %>"><% $name %></a>
+<a href="<% $RT::WebPath %>/Dist/Display.html?Queue=<% $value |uhn %>"><% $name %></a>
 <%ARGS>
 $QueueObj
 </%ARGS>
 <%INIT>
-my $name = $QueueObj->Name;
+my $name = my $value = $QueueObj->Name;
+$name = '#'. ($value = $QueueObj->id)
+    unless defined $value && length $value;
 </%INIT>

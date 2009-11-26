@@ -1,18 +1,6 @@
-<%args>
-$ARGSRef
-</%args>
-<%init>
-my $Queue = $ARGSRef->{Queue}
-    or return;
-
-my $QueueObj = RT::Queue->new($session{CurrentUser});
-$QueueObj->Load($Queue);
-
-if ( $QueueObj->Disabled ) {
-    $m->comp('/Dist/Elements/ErrorDisabled', Queue => $QueueObj );
-    $m->abort;
-}
-</%init>
+<%ARGS>
+$QueueObj
+</%ARGS>
 
 <& /Dist/Elements/ShowNotes, Queue => $QueueObj &>
 
