@@ -3,6 +3,7 @@ etc/initialdata
 html/Callbacks/BugTracker/autohandler/Default
 html/Callbacks/BugTracker/Elements/Tabs/Default
 html/Callbacks/BugTracker/Search/Simple.html/ModifyQuery
+html/Callbacks/BugTracker/Ticket/Create.html/Default
 html/Callbacks/BugTracker/Ticket/Create.html/FormStart
 html/Dist/BeginsWith.html
 html/Dist/Browse.html
@@ -21,7 +22,6 @@ html/Dist/Manage.html
 html/Dist/Search.html
 html/Elements/ErrorNoDist
 html/Elements/ErrorNoUser
-html/Ticket/Create.html
 html/Ticket/Elements/ShowQueue
 inc/Module/Install.pm
 inc/Module/Install/Base.pm
