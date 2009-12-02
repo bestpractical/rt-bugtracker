@@ -54,12 +54,15 @@
 &>
 
 <%INIT>
-my $current_toptab = "Dist/ByMaintainer.html?Name=" . $session{'CurrentUser'}->UserObj->Name;
+my $escaped_uname = $m->interp->apply_escapes(
+    $session{'CurrentUser'}->UserObj->Name, 'u'
+);
+my $current_toptab = "Dist/ByMaintainer.html?Name=$escaped_uname";
 
 my $tabs = {
     A => {
         title => loc('My Distributions'),
-        path => 'Dist/ByMaintainer.html?Name=' . $session{'CurrentUser'}->UserObj->Name,
+        path => "Dist/ByMaintainer.html?Name=$escaped_uname",
     },
     B => {
         title => loc('Search'),
