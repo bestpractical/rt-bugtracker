@@ -45,18 +45,25 @@
 %# those contributions and any derivatives thereof.
 %# 
 %# END BPS TAGGED BLOCK }}}
-<& /Elements/Header, Title => loc("Distributions starting with [_1]", $Name) &>
+<& /Elements/Header, Title => $title &>
 <& /Dist/Elements/Tabs,
-    Title => loc("Distributions starting with [_1]", $Name),
+    Title => $title,
     current_tab => 'Dist/Browse.html',
-    &>
+&>
 
-<& /Dist/Elements/DistributionList, queues => $queues &>
+<& /Dist/Elements/BeginsWith, Name => $Name &>
+
+% if ( $queues ) {
+<& /Public/Elements/DistributionList, queues => $queues &>
+% }
 
 <%init>
-my $queues = RT::Queues->new($session{CurrentUser});
 
-$queues->Limit(FIELD => 'Name', VALUE => $Name, OPERATOR => 'STARTSWITH');
+my ($queues, $title) = $m->comp(
+    '/Dist/Elements/BeginsWith:Process',
+    Name => $Name,
+);
+
 </%init>
 <%args>
 $Name => undef
