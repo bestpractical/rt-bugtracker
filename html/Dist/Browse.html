@@ -45,19 +45,26 @@
 %# those contributions and any derivatives thereof.
 %# 
 %# END BPS TAGGED BLOCK }}}
-<& /Elements/Header, Title => loc("Browse Distributions") &>
+<& /Elements/Header, Title => $title &>
 <& /Dist/Elements/Tabs,
-    Title => loc("Browse Distributions"),
+    Title => $title,
     current_tab => 'Dist/Browse.html',
-    &>
+&>
 
-<p>
-Find distributions that start with...
-</p>
+<& /Dist/Elements/BeginsWith, Name => $Name &>
 
-<p>
-% for my $letter ("A".."Z") {
-<a href="<% $RT::WebPath %>/Dist/BeginsWith.html?Name=<% $letter %>"><% $letter %></a>
+% if ( $queues ) {
+<& /Public/Elements/DistributionList, queues => $queues &>
 % }
-</p>
 
+<%init>
+
+my ($queues, $title) = $m->comp(
+    '/Dist/Elements/BeginsWith:Process',
+    Name => $Name,
+);
+
+</%init>
+<%args>
+$Name => undef
+</%args>
