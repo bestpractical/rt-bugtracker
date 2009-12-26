@@ -9,6 +9,7 @@ html/Dist/BeginsWith.html
 html/Dist/Browse.html
 html/Dist/ByMaintainer.html
 html/Dist/Display.html
+html/Dist/Elements/BeginsWith
 html/Dist/Elements/DistributionList
 html/Dist/Elements/EditNotes
 html/Dist/Elements/EditNotifyAddresses
