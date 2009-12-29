@@ -113,6 +113,9 @@ sub SetNotifyAddresses {
 sub SubjectTagRE {
     return qr/[a-z0-9 ._-]/i;
 }
+
+{
+no warnings 'redefine';
 sub SubjectTag {
     return (shift)->_AttributeBasedField(
         SubjectTag => @_
@@ -128,6 +131,7 @@ sub SetSubjectTag {
     return $self->_SetAttributeBasedField(
         SubjectTag => $value, @_
     );
+}
 }
 
 sub _AttributeBasedField {
