@@ -63,9 +63,9 @@
 %     }
   <li>
     <span class="dist-actions">
-      <a href="<% $RT::WebPath %>/Dist/Display.html?Queue=<% $queue->Name |uhn %>">Bug list</a>
+      <a href="<% $RT::WebPath %>/Dist/Display.html?Queue=<% $queue->Name |uhn %>"><% loc('Bug list') %></a>
       &#8226;
-      <a href="<% $RT::WebPath %>/Ticket/Create.html?Queue=<% $queue->Name |uhn %>">Report a bug</a>
+      <a href="<% $RT::WebPath %>/Ticket/Create.html?Queue=<% $queue->Name |uhn %>"><% loc('Report a bug') %></a>
     </span>
     <strong><% $queue->Name %></strong>
   </li>
