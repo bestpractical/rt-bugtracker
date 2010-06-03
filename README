@@ -1,0 +1,28 @@
+NAME
+    RT::BugTracker - Adds a UI designed for bug-tracking for developers to
+    RT
+
+DESCRIPTION
+    This extension changes RT's UI to make more useful when you want to
+    track bug reports in many distributions. This extension is a start for
+    setups like <http://rt.cpan.org>. It's been developed to help authors of
+    perl modules.
+
+    It follows several rules to achieve the goal:
+
+    Each queue associated with one package (distribution).
+    Queue's AdminCc list is used for maintainers of the coresponding
+    distribution.
+    Not everything was possible to implement using callbacks and other clean
+    extending methods, so some files have been overriden. We currently in
+    sync with RT 3.6.6.
+
+SEE ALSO
+    RT::BugTracker::Public, RT::Extension::rt_cpan_org
+
+AUTHOR
+    Kevin Riggle <kevinr@bestpractical.com>
+
+LICENSE
+    GPL version 2.
+

@@ -204,6 +204,10 @@ L<RT::BugTracker::Public>, L<RT::Extension::rt_cpan_org>
 
 Kevin Riggle E<lt>kevinr@bestpractical.comE<gt>
 
+=head1 LICENSE
+
+GPL version 2.
+
 =cut
 
 1;
