@@ -46,10 +46,7 @@
 %# 
 %# END BPS TAGGED BLOCK }}}
 <& /Elements/Header, Title => loc("Distributions maintained by [_1]", $user->Name) &>
-<& /Dist/Elements/Tabs,
-    Title => loc("Distributions maintained by [_1]", $user->Name),
-    current_tab => $current_tab,
-    &>
+<& /Elements/Tabs &>
 
 <& /Dist/Elements/DistributionList, queues => $watched_queues &>
 
@@ -67,14 +64,6 @@ if (not $user->Id) {
 }
 
 my $watched_queues = $user->WatchedQueues('AdminCc');
-
-my $current_tab;
-if ($Name eq $user->Name) {
-    $current_tab = 'Dist/ByMaintainer.html?Name=' . $Name;
-}
-else {
-    $current_tab = 'Dist/Browse.html';
-}
 
 </%init>
 <%args>

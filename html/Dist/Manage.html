@@ -2,12 +2,7 @@
     Title => $title,
 &>
 
-<& /Dist/Elements/Tabs, 
-    current_tab => '/Dist/Manage.html',
-    current_subtab => $current_subtab,
-    Queue => $Name,
-    Title => $title,
-&>
+<& /Elements/Tabs &>
 
 <& /Elements/ListActions, actions => \@results &>
 
