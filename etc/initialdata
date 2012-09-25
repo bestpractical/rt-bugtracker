@@ -12,7 +12,7 @@
         ScripCondition => 'User Defined',
         CustomIsApplicableCode => q[
             my $type = $self->TransactionObj->Type;
-            return 0 if $type ne 'Create' or $type ne 'Correspond';
+            return 0 if $type ne 'Create' && $type ne 'Correspond';
             return 1;
         ],
         ScripAction    => 'Notify Additional Addresses',
