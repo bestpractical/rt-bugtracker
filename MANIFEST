@@ -1,7 +1,8 @@
 Changes
 etc/initialdata
 html/Callbacks/BugTracker/autohandler/Default
-html/Callbacks/BugTracker/Elements/Tabs/Default
+html/Callbacks/BugTracker/Elements/Tabs/Privileged
+html/Callbacks/BugTracker/Elements/Tabs/SelfService
 html/Callbacks/BugTracker/Search/Simple.html/ModifyQuery
 html/Callbacks/BugTracker/Ticket/Create.html/Default
 html/Callbacks/BugTracker/Ticket/Create.html/FormStart
@@ -18,7 +19,6 @@ html/Dist/Elements/ErrorDisabled
 html/Dist/Elements/ShowBugs
 html/Dist/Elements/ShowMaintainers
 html/Dist/Elements/ShowNotes
-html/Dist/Elements/Tabs
 html/Dist/Manage.html
 html/Dist/Search.html
 html/Elements/ErrorNoDist
@@ -30,6 +30,7 @@ inc/Module/Install/Can.pm
 inc/Module/Install/Fetch.pm
 inc/Module/Install/Makefile.pm
 inc/Module/Install/Metadata.pm
+inc/Module/Install/ReadmeFromPod.pm
 inc/Module/Install/RTx.pm
 inc/Module/Install/RTx/Factory.pm
 inc/Module/Install/Win32.pm
@@ -39,3 +40,4 @@ lib/RT/BugTracker.pm
 Makefile.PL
 MANIFEST			This list of files
 META.yml
+README
