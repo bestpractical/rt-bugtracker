@@ -102,18 +102,18 @@ if ( $request_path =~ m{^/Dist} ) {
         );
         PageMenu()->child(
             active => title => loc("Active bugs"),
-            path => "/Dist/Display.html?Status=Active&Queue=" . $escaped_queue,
+            path => "/Dist/Display.html?Status=Active;Queue=" . $escaped_queue,
         );
 
         PageMenu()->child(
             resolved => title => loc("Resolved bugs"),
-            path => "/Dist/Display.html?Status=Resolved&Queue="
+            path => "/Dist/Display.html?Status=Resolved;Queue="
               . $escaped_queue,
         );
 
         PageMenu()->child(
             rejected => title => loc("Rejected bugs"),
-            path => "/Dist/Display.html?Status=Rejected&Queue="
+            path => "/Dist/Display.html?Status=Rejected;Queue="
               . $escaped_queue,
         );
 
