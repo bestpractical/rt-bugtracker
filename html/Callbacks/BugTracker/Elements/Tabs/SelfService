@@ -53,6 +53,7 @@ my $escaped_uname = $m->interp->apply_escapes(
 
 my $tracker = Menu()->child(
     bugtracker => title => loc('Distributions'),
+    path => '/Dist/ByMaintainer.html?Name=' . $escaped_uname,
 );
 
 $tracker->child(
