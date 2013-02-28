@@ -72,13 +72,8 @@ $tracker->child(
 
 my $request_path = $HTML::Mason::Commands::r->path_info;
 $request_path =~ s!^/{2,}!/!;
-if ( $request_path =~ m{^/Dist} ) {
-    my $Queue;
-    if ( $request_path !~ m{^/Dist/ByMaintainer\.html} ) {
-        $Queue = $DECODED_ARGS->{'Name'};
-    }
-
-    $Queue ||= $DECODED_ARGS->{'Queue'};
+if ( $request_path =~ m{^/Dist/(?:Display|Manage)\.html} ) {
+    my $Queue = $DECODED_ARGS->{'Name'} || $DECODED_ARGS->{'Queue'};
 
     my $queue_obj;
     if ($Queue) {
