@@ -1,5 +1,4 @@
-<& /Dist/Elements/Header, Title => loc("Error") &>
-
+<& /Elements/Header, Title => loc("Error") &>
 <& /Elements/Tabs &>
 
 <& /Dist/Elements/ShowNotes, Queue => $Queue &>
