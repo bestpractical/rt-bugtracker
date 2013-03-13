@@ -2,5 +2,7 @@
 $Ticket
 </%ARGS>
 
+<& /Dist/Elements/ShowBugtracker, Queue => $Ticket->QueueObj &>
+
 <& /Dist/Elements/ShowNotes, Queue => $Ticket->QueueObj &>
 
