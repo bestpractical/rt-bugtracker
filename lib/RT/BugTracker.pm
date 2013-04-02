@@ -82,8 +82,71 @@ overriden. We currently in sync with RT 3.6.6.
 
 =cut
 
+RT->AddStyleSheets("bugtracker.css");
+
 require RT::Queue;
 package RT::Queue;
+
+sub DistributionBugtracker {
+    return (shift)->_AttributeBasedField(
+        DistributionBugtracker => @_
+    );
+}
+
+
+sub SetDistributionBugtracker {
+    my ($self, $value) = (shift, shift);
+
+    my $bugtracker = {};
+    my $update = 0;
+
+    # Validate and set the mail to - we don't care if this is rt.cpan.org
+    if(defined($value->{mailto}) && !($value->{mailto} =~  m/rt\.cpan\.org/)) {
+        if(Email::Address->parse($value->{mailto})) {
+            $bugtracker->{mailto} = $value->{mailto};
+            $update = 1;
+        }
+    }
+
+    # Hash of supported URI schemes for validation
+    my $supported_schemes = {
+        http    => 1,
+        https   => 1,
+    };
+
+    # Validate and set the web - we don't care if this is rt.cpan.org
+    if(defined($value->{web}) && !($value->{web} =~ m/rt\.cpan\.org/)) {
+        if(my $uri = URI->new($value->{web})) {
+
+            # Check that this is a supported scheme
+            if(defined($supported_schemes->{$uri->scheme()})) {
+                $bugtracker->{web} = $value->{web};
+                $update = 1;
+            }
+
+            else {
+                my $error_msg = "Failed to set external bugtracker website";
+                $error_msg   .= " on distribution (" . $self->Name() .  ").";
+                $error_msg   .= " Unsupported scheme (" . $uri->scheme() . ").";
+                $RT::Logger->error($error_msg);
+            }
+        }
+        else {
+            my $error_msg = "Failed to set external bugtracker website";
+            $error_msg   .= " on distribution (" . $self->Name() .  ")";
+            $error_msg   .= " Unable to parse (" . $value->{web} . ") with URI.";
+            $RT::Logger->error($error_msg);
+        }
+    }
+
+    if($update) {
+        return $self->_SetAttributeBasedField( DistributionBugtracker => $bugtracker );
+    }
+
+    else {
+        return $self->_SetAttributeBasedField( DistributionBugtracker => undef );
+    }
+}
 
 sub DistributionNotes {
     return (shift)->_AttributeBasedField(

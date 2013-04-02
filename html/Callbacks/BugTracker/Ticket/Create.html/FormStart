@@ -2,5 +2,7 @@
 $QueueObj
 </%ARGS>
 
+<& /Dist/Elements/ShowBugtracker, Queue => $QueueObj &>
+
 <& /Dist/Elements/ShowNotes, Queue => $QueueObj &>
 
