@@ -51,7 +51,7 @@ my $escaped_uname = $m->interp->apply_escapes(
     $session{'CurrentUser'}->UserObj->Name, 'u'
 );
 
-my $tracker = Menu()->child(
+my $tracker = Menu->child("search")->add_after(
     bugtracker => title => loc('Distributions'),
     path => '/Dist/ByMaintainer.html?Name=' . $escaped_uname,
 );
