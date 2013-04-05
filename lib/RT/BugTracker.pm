@@ -125,10 +125,10 @@ sub SetDistributionBugtracker {
             }
 
             else {
-                my $error_msg = "Failed to set external bugtracker website";
+                my $error_msg = "Refused to set external bugtracker website";
                 $error_msg   .= " on distribution (" . $self->Name() .  ").";
                 $error_msg   .= " Unsupported scheme (" . $uri->scheme() . ").";
-                $RT::Logger->error($error_msg);
+                $RT::Logger->info($error_msg);
             }
         }
         else {
