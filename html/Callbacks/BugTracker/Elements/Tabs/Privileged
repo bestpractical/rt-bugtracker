@@ -46,13 +46,5 @@
 %# 
 %# END BPS TAGGED BLOCK }}}
 <%INIT>
-my $Name = $session{'CurrentUser'}->UserObj->Name;
-
-$toptabs->{Ag} = {
-    title => loc('Distributions'),
-    path  => 'Dist/ByMaintainer.html?Name=' . $Name,
-};
+  $m->comp('/Callbacks/BugTracker/Elements/Tabs/SelfService');
 </%INIT>
-<%ARGS>
-$toptabs => undef
-</%ARGS>

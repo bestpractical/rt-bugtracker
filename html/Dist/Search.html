@@ -46,15 +46,12 @@
 %# 
 %# END BPS TAGGED BLOCK }}}
 <& /Elements/Header, Title => loc("Public Bug Tracker") &>
-<& Elements/Tabs, 
-    current_tab => "Dist/Search.html",
-    Title => loc("Search Distributions")
-&>
+<& /Elements/Tabs &>
 
 <p>
   <form action="/Dist/Display.html" method="get">
     <label for="form-dist-name"><&|/l&>Find a distribution by full name:</&></label>
-    <input type="text" name="Queue" id="form-dist-name" />
+    <input type="text" name="Queue" id="form-dist-name" data-autocomplete="Queues" data-autocomplete-autosubmit=1 />
     <input type="submit" class="button" value="<&|/l&>Search</&>" />
   </form>
 </p>
@@ -62,7 +59,7 @@
 <p>
   <form action="/Dist/Browse.html" method="get">
     <label for="form-dist-name"><&|/l&>Find distributions by beginning of name:</&></label>
-    <input type="text" name="Name" id="form-dist-name" />
+    <input type="text" name="Name" id="form-dist-name" data-autocomplete="Queues" data-autocomplete-autosubmit=1 />
     <input type="submit" class="button" value="<&|/l&>Search</&>" />
   </form>
 </p>
@@ -70,7 +67,7 @@
 <p>
   <form action="/Dist/ByMaintainer.html" method="get">
     <label for="form-dist-maint"><&|/l&>Find distributions by maintainer:</&></label>
-    <input type="text" name="Name" id="form-dist-maint" />
+    <input type="text" name="Name" id="form-dist-maint" data-autocomplete="Users" data-autocomplete-autosubmit=1 />
     <input type="submit" class="button" value="<&|/l&>Search</&>" />
   </form>
 </p>

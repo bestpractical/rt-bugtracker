@@ -50,12 +50,9 @@
     RSSAutoDiscovery => $RSSFeedURL,
 &>
 
-<& /Dist/Elements/Tabs, 
-    current_tab => '/Dist/Display.html',
-    current_subtab => $current_subtab,
-    Queue => $Name,
-    Title => $title,
-&>
+<& /Elements/Tabs &>
+
+<& /Dist/Elements/ShowBugtracker, Queue => $QueueObj &>
 
 <& /Dist/Elements/ShowNotes, Queue => $QueueObj &>
 
