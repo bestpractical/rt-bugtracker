@@ -1,7 +1,7 @@
 % if ( $Queue->Disabled ) {
-<h3><% loc('WARNING: Queue is disabled') %></h3>
-
-<p>This queue has been disabled by maintainers' request. Heh, it's still possible to create bugs using email address, but we <b>beg you</b> "don't create new tickets". Instead read distribution's documentation and figure out how to report issues properly.</p>
+<&| /Widgets/TitleBox, title => loc("Queue is disabled"), class => "error", hideable => 0 &>
+<&|/l&>This queue is disabled and you may not create new tickets in it.  Disabled queues are usually because the distribution was merged with another or changed names.  Sometimes they are the end result of a bad autocreate from PAUSE data before anyone noticed.</&>
+</&>
 % }
 
 % if ( defined $notes && length $notes ) {
