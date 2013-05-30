@@ -10,3 +10,7 @@
     -webkit-border-radius: 10px;
     border-radius: 10px;
 }
+
+.dist-notes textarea, .dist-addresses textarea, .dist-subjecttag input {
+    display: block;
+}

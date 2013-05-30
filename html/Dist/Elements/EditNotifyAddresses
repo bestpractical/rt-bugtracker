@@ -1,5 +1,5 @@
-<% loc('Additional addresses RT should notify') %>:
-<textarea cols="120" rows="10" name="Queue-<% $Queue->id %>-NotifyAddresses"><% join ', ', @$value %></textarea><br />
+<label class="dist-addresses"><% loc('Additional addresses RT should notify') %>:
+<textarea cols="120" rows="10" name="Queue-<% $Queue->id %>-NotifyAddresses"><% join ', ', @$value %></textarea></label><br />
 <%ARGS>
 $Queue => undef
 </%ARGS>

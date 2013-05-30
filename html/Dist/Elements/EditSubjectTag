@@ -1,6 +1,6 @@
-<% loc('Subject tag in addition to default') %>
+<label class="dist-subjecttag"><% loc('Subject tag in addition to default') %>
 (<% loc('be reasonable') %>):
-<input size="120" name="Queue-<% $Queue->id %>-SubjectTag" value="<% $value || '' %>" /><br />
+<input size="120" name="Queue-<% $Queue->id %>-SubjectTag" value="<% $value || '' %>" /></label><br />
 <%ARGS>
 $Queue => undef
 </%ARGS>
