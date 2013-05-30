@@ -52,7 +52,7 @@ use warnings;
 package RT::BugTracker;
 
 use 5.008003;
-our $VERSION = '0.06_01';
+our $VERSION = '4.0';
 
 =head1 NAME
 
@@ -60,12 +60,11 @@ RT::BugTracker - Adds a UI designed for bug-tracking for developers to RT
 
 =head1 DESCRIPTION
 
-This extension changes RT's UI to make more useful when you want to
-track bug reports in many distributions. This extension is a start
-for setups like L<http://rt.cpan.org>. It's been developed to help
-authors of perl modules.
+This extension changes RT's interface to be more useful when you want to track
+bug reports in many distributions. This extension is a start for setups like
+L<http://rt.cpan.org>. It's been developed to help authors of Perl modules.
 
-It follows several rules to achieve the goal:
+It follows two basic rules to achieve the goal:
 
 =over 4
 
@@ -73,10 +72,6 @@ It follows several rules to achieve the goal:
 
 =item Queue's AdminCc list is used for maintainers of the
 coresponding distribution.
-
-=item Not everything was possible to implement using callbacks
-and other clean extending methods, so some files have been
-overriden. We currently in sync with RT 3.6.6.
 
 =back
 
@@ -239,6 +234,12 @@ sub _SetAttributeBasedField {
 L<RT::BugTracker::Public>, L<RT::Extension::rt_cpan_org>
 
 =head1 AUTHOR
+
+Thomas Sibley E<lt>trs@bestpractical.comE<gt>
+
+Ruslan Zaikarov E<lt>ruz@bestpractical.comE<gt>
+
+sunnavy E<lt>sunnavy@bestpractical.comE<gt>
 
 Kevin Riggle E<lt>kevinr@bestpractical.comE<gt>
 
