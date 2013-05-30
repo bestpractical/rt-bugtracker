@@ -172,30 +172,30 @@ sub SetNotifyAddresses {
     );
 }
 
-# XXX: should go with 3.8 port
-sub SubjectTagRE {
-    return qr/[a-z0-9 ._-]/i;
-}
-
-{
-no warnings 'redefine';
-sub SubjectTag {
-    return (shift)->_AttributeBasedField(
-        SubjectTag => @_
-    ) || '';
-}
+{ no warnings 'redefine';
 sub SetSubjectTag {
     my ($self, $value) = (shift, shift);
-    if ( defined $value ) {
-        my $re = $self->SubjectTagRE;
-        return (0, $self->loc("Invalid characters in SubjectTag"))
-            unless $value =~ /^$re*$/;
+    if ( defined $value and length $value ) {
+        $value =~ s/(^\s+|\s+$)//g;
+
+        unless ($value =~ /^\Q$RT::rtname\E\b/) {
+            # Prepend the $rtname before we get into the database so we don't
+            # have to munge it on the way out.
+            $value = "$RT::rtname $value";
+        }
+
+        # We just prepended the $rtname if necessary, so the full subject tag
+        # regex should match.  If it doesn't, the subject tag contains
+        # prohibited characters (or we have a bug, but catching that is good so
+        # we don't mishandle incoming mail).
+        my $re = RT->Config->Get("EmailSubjectTagRegex");
+        unless ($value =~ /^$re$/) {
+            RT->Logger->warning("Subject tag for queue @{[$self->Name]} contains prohibited characters: '$value'");
+            return (0, $self->loc("Subject tag contains prohibited characters"));
+        }
     }
-    return $self->_SetAttributeBasedField(
-        SubjectTag => $value, @_
-    );
-}
-}
+    return $self->_Set( Field => 'SubjectTag', Value => $value );
+}}
 
 sub _AttributeBasedField {
     my $self = shift;
@@ -233,31 +233,6 @@ sub _SetAttributeBasedField {
     }
     return ( 1, $self->loc("[_1] changed", $self->loc($name)) );
 }
-
-require RT::Action::SendEmail;
-package RT::Action::SendEmail;
-
-my $tag_re = RT::Queue->SubjectTagRE;
-$RT::EmailSubjectTagRegex = qr/\Q$RT::rtname\E(?:\s+$tag_re+)?/;
-
-no warnings 'redefine';
-my $old = \&SetSubjectToken;
-*RT::Action::SendEmail::SetSubjectToken = sub {
-    my $self = shift;
-    $old->($self, @_);
-
-    my $tag = $self->TicketObj->QueueObj->SubjectTag;
-    return unless defined $tag && length $tag;
-
-    my $id = $self->TicketObj->id;
-    my $head = $self->TemplateObj->MIMEObj->head;
-    my $subject = $head->get('Subject');
-    my $tmp = $subject;
-    $tmp =~ s{\[\Q$RT::rtname\E\s+#$id\]}{[$RT::rtname $tag #$id]}i;
-    return if $tmp eq $subject;
-
-    $head->replace( Subject => $tmp );
-};
 
 =head1 SEE ALSO
 
