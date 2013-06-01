@@ -51,25 +51,30 @@ $query => ''
 <%INIT>
 $query = $$query if $query;
 
-# fallback if digits (ticket id)
-return if $query =~ /^\d+$/;
+# fallback if digits (ticket id) or looks like email address or not a single word
+return if not $query or $query =~ /(^\d+$|\@|\s)/;
 
 # try to load a queue or a user; if found, redirect to the distribution page
 # instead of the search page
 
 my $queue = RT::Queue->new( $session{'CurrentUser'} );
 $queue->Load( $query );
+$queue->Load( $query ) if $query =~ s/::/-/g;
 if ( $queue->id ) {
     RT::Interface::Web::Redirect(
-        $RT::WebURL .'/Dist/Display.html?Queue='. $m->interp->apply_escapes( $query, 'u' )
+        $RT::WebURL .'/Dist/Display.html?Queue='. $m->interp->apply_escapes( $queue->Name, 'u' )
     );
 }
 
+# PAUSE ids are only alpha
+return if $query =~ /[^a-zA-Z]/;
+
 my $user = RT::User->new( $session{'CurrentUser'} );
-$user->Load( $query );
-if ( $user->id ) {
+$user->LoadByEmail( "$query\@cpan.org" );
+$user->LoadByCols( Name => $query ) unless $user->id;
+if ( $user->id and $user->Privileged ) {
     RT::Interface::Web::Redirect(
-        $RT::WebURL .'/Dist/ByMaintainer.html?Name='. $m->interp->apply_escapes( $query, 'u' )
+        $RT::WebURL .'/Dist/ByMaintainer.html?Name='. $m->interp->apply_escapes( $user->Name, 'u' )
     );
 }
 return;
