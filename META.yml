@@ -1,7 +1,7 @@
 ---
 abstract: 'Adds a UI designed for bug-tracking for developers to RT'
 author:
-  - 'Kevin Riggle <kevinr@bestpractical.com>'
+  - 'Thomas Sibley <trs@bestpractical.com>'
 build_requires:
   ExtUtils::MakeMaker: 6.59
 configure_requires:
@@ -23,4 +23,4 @@ requires:
   perl: 5.8.3
 resources:
   license: http://opensource.org/licenses/gpl-license.php
-version: 0.06_01
+version: 4.0
