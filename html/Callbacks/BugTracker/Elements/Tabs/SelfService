@@ -78,6 +78,8 @@ if ( $request_path =~ m{^/Dist/(?:Display|Manage)\.html} ) {
 
     my $queue_obj;
     if ($Queue) {
+        $Queue =~ s/::/-/g;
+
         my $tmp = RT::Queue->new( $session{'CurrentUser'} );
         $tmp->Load($Queue);
         unless ( $tmp->id ) {
