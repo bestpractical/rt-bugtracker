@@ -1,3 +1,5 @@
+% $m->callback( %ARGS, CallbackName => "Top" );
+
 % if ( $Queue->Disabled ) {
 <&| /Widgets/TitleBox, title => loc("Queue is disabled"), class => "error", hideable => 0 &>
 <&|/l&>This queue is disabled and you may not create new tickets in it.  Disabled queues are usually because the distribution was merged with another or changed names.  Sometimes they are the end result of a bad autocreate from PAUSE data before anyone noticed.</&>
