@@ -1,7 +1,7 @@
 ---
 abstract: 'Adds a UI designed for bug-tracking for developers to RT'
 author:
-  - 'Thomas Sibley <trs@bestpractical.com>'
+  - 'Best Practical Solutions, LLC <modules@bestpractical.com>'
 build_requires:
   ExtUtils::MakeMaker: 6.59
 configure_requires:

@@ -229,23 +229,69 @@ sub _SetAttributeBasedField {
     return ( 1, $self->loc("[_1] changed", $self->loc($name)) );
 }
 
+=head1 INSTALLATION
+
+=over
+
+=item C<perl Makefile.PL>
+
+=item C<make>
+
+=item C<make install>
+
+May need root permissions
+
+=item C<make initdb>
+
+Only run this the first time you install this module.
+
+If you run this twice, you may end up with duplicate data
+in your database.
+
+If you are upgrading this module, check for upgrading instructions
+in case changes need to be made to your database.
+
+=item Edit your F</opt/rt4/etc/RT_SiteConfig.pm>
+
+Add this line:
+
+    Set(@Plugins, qw(RT::BugTracker));
+
+or add C<RT::BugTracker> to your existing C<@Plugins> line.
+
+=item Clear your mason cache
+
+    rm -rf /opt/rt4/var/mason_data/obj
+
+=item Restart your webserver
+
+=back
+
 =head1 SEE ALSO
 
 L<RT::BugTracker::Public>, L<RT::Extension::rt_cpan_org>
 
 =head1 AUTHOR
 
-Thomas Sibley E<lt>trs@bestpractical.comE<gt>
+Best Practical Solutions, LLC E<lt>modules@bestpractical.comE<gt>
 
-Ruslan Zaikarov E<lt>ruz@bestpractical.comE<gt>
+=head1 BUGS
 
-sunnavy E<lt>sunnavy@bestpractical.comE<gt>
+All bugs should be reported via email to
 
-Kevin Riggle E<lt>kevinr@bestpractical.comE<gt>
+    L<bug-RT-BugTracker@rt.cpan.org|mailto:bug-RT-BugTracker@rt.cpan.org>
 
-=head1 LICENSE
+or via the web at
 
-GPL version 2.
+    L<rt.cpan.org|http://rt.cpan.org/Public/Dist/Display.html?Name=RT-BugTracker>.
+
+=head1 LICENSE AND COPYRIGHT
+
+This software is Copyright (c) 2014 by Best Practical Solutions
+
+This is free software, licensed under:
+
+  The GNU General Public License, Version 2, June 1991
 
 =cut
 
