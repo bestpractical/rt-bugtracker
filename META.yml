@@ -19,6 +19,8 @@ no_index:
     - etc
     - html
     - inc
+  package:
+    - RT::Queue
 requires:
   perl: 5.8.3
 resources:
