@@ -1,3 +1,7 @@
+5.2 2014-12-18
+ - Add no_index for core RT packages
+ - Add repository metadata
+
 5.1 2014-12-15
  - Updated changelog
  - Packaging and documenation updates
