@@ -15,4 +15,11 @@ Set( $ExtractSubjectTagNoMatch, qr/\[$EmailSubjectTagRegex #\d+\]/ );
 #    'Substitution' => '-'
 #);
 
+# Group BugTracker-specific custom fields
+Set(%CustomFieldGroupings,
+    'RT::Ticket' => [
+        'BugTracker' => ['Severity', 'Broken in', 'Fixed in'],
+    ],
+);
+
 1;

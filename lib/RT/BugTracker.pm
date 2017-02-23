@@ -304,6 +304,29 @@ s/::/-/g
 The values above translate Perl module names into their email-friendly
 counterpart queue names.
 
+=head2 Custom Fields: Severity, Broken in, Fixed in
+
+RT::BugTracker creates three custom fields on queues, globally, with
+empty values. The BugTracker administrator must populate the values of
+each of these custom fields.
+
+=head3 Severity
+
+Bug severity levels, like 'Low', 'Medium', and 'High'.
+
+=head3 Broken in
+
+The distribution version where the bug in the ticket first
+appeared. Since each distribution will have different release
+versions, the BugTracker admin will need top populate these values for
+each distribution.
+
+=head3 Fixed in
+
+The distribution version where the bug in the ticket was fixed. Since
+each distribution will have different release versions, the BugTracker
+admin will need top populate these values for each distribution.
+
 =head1 SEE ALSO
 
 L<RT::BugTracker::Public>, L<RT::Extension::rt_cpan_org>
