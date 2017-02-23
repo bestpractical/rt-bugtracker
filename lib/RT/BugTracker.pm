@@ -256,9 +256,7 @@ in case changes need to be made to your database.
 
 Add this line:
 
-    Set(@Plugins, qw(RT::BugTracker));
-
-or add C<RT::BugTracker> to your existing C<@Plugins> line.
+    Plugin('RT::BugTracker');
 
 =item Clear your mason cache
 
