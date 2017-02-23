@@ -51,7 +51,8 @@
 <h3><% loc('Bugs') %></h3>
 % }
 
-<& /Elements/TicketList,
+<& /Elements/CollectionList,
+    Class   => 'RT::Tickets',
     Query   => $Query,
     Format  => $Format,
     OrderBy => $OrderBy,
