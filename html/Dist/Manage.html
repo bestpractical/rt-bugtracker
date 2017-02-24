@@ -72,7 +72,7 @@ $Name =~ s/$NameRegex{Pattern}/$NameRegex{Substitution}/g;
 my $QueueObj = RT::Queue->new( $session{CurrentUser} );
 $QueueObj->Load( $Name );
 unless ( $QueueObj->id ) {
-    $m->comp('/Public/Elements/ErrorNoDist', Queue => $Name, %ARGS);
+    $m->comp('/Elements/ErrorNoDist', Queue => $Name, %ARGS);
     $m->abort();
 }
 $ARGS{'Name'} = $Name = $QueueObj->Name;

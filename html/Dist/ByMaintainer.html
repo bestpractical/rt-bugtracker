@@ -59,7 +59,7 @@ for my $method (qw(Load LoadByEmail)) {
 }
 
 if (not $user->Id) {
-    $m->comp('/Public/Elements/ErrorNoUser', Name => $Name, %ARGS);
+    $m->comp('/Elements/ErrorNoUser', Name => $Name, %ARGS);
     $m->abort();
 }
 
