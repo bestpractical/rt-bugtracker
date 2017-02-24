@@ -59,7 +59,8 @@ return if not $query or $query =~ /(^\d+$|\@|\s)/;
 
 my $queue = RT::Queue->new( $session{'CurrentUser'} );
 $queue->Load( $query );
-$queue->Load( $query ) if $query =~ s/::/-/g;
+my %NameRegex = RT->Config->Get("DistributionToQueueRegex");
+$queue->Load( $query ) if $query =~ s/$NameRegex{Pattern}/$NameRegex{Substitution}/g;
 if ( $queue->id ) {
     RT::Interface::Web::Redirect(
         $RT::WebURL .'/Dist/Display.html?Queue='. $m->interp->apply_escapes( $queue->Name, 'u' )

@@ -266,6 +266,44 @@ Add this line:
 
 =back
 
+=head1 CONFIGURATION
+
+=head2 DistributionToQueueRegex
+
+Some programming languages use characters in package names that may
+not work well in email addresses. Perl modules use double colons,
+'::', to separate package parents from children. BugTracker
+administrators could name a distribution queue using these characters,
+like 'Data::Dumper', for example. But the resulting public email
+address for bug reports would be bugs-Data::Dumper@example.com.
+
+While some characters may not be unallowed in email addresses,
+BugTracker administrators may want to name their distribution queues
+so that resulting public bug report addresses are more likely to get
+through spam and other filters.
+
+However, users want to search software distributions by the canonical
+name of the package, like under Distributions > Search and
+Distributions > Browse. Users expect to type "Data::Dumper" and find
+the distribution queue named "Data-Dumper".
+
+Use this config variable to define the character translation between
+distribution search strings and distribution queue names. BugTracker
+will use 'Pattern' and 'Substitution' in a subsitution regex
+match. BugTracker will use this value:
+
+Set(%DistributionToQueueRegex,
+    'Pattern' => '::',
+    'Substitution' => '-'
+);
+
+like this:
+
+s/::/-/g
+
+The values above translate Perl module names into their email-friendly
+counterpart queue names.
+
 =head1 SEE ALSO
 
 L<RT::BugTracker::Public>, L<RT::Extension::rt_cpan_org>

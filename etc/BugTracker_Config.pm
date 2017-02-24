@@ -8,4 +8,11 @@ Set( $EmailSubjectTagRegex, qr/$EmailSubjectTagRegex(?:\s+$DistributionSubjectTa
 # regex above.
 Set( $ExtractSubjectTagNoMatch, qr/\[$EmailSubjectTagRegex #\d+\]/ );
 
+# Translate distribution search strings from their canonical names,
+# like Data::Dumper, to their queue name, like Data-Dumper.
+#Set(%DistributionToQueueRegex,
+#    'Pattern' => '::',
+#    'Substitution' => '-'
+#);
+
 1;
