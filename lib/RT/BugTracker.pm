@@ -61,18 +61,49 @@ RT::BugTracker - Adds a UI designed for bug-tracking for developers to RT
 
 =head1 DESCRIPTION
 
-This extension changes RT's interface to be more useful when you want to track
-bug reports in many distributions. This extension is a start for setups like
-L<http://rt.cpan.org>. It's been developed to help authors of Perl modules.
+This extension changes RT's interface to be more useful when you want
+to track bug reports in many distributions. This extension is a start
+for setups like L<http://rt.cpan.org>. It's been developed to help
+authors of Perl modules.
 
-It follows two basic rules to achieve the goal:
+In RT::BugTracker, every queue is a software "distribution".
+RT::BugTracker adds a new F<Distribution> menu with options to search
+and browse distributions. User and group rights apply normally to
+queues through the Distribution menu search options.
+
+Users can search distributions by maintainer through F<Distribution >
+Search>. Maintainers are the AdminCc users and groups for
+the distribution.
+
+The search functions under the F<Distribution> menu return lists of
+matching distributions. List items include a link to the bug list for
+the distribution.
+
+Bug list search results include columns for C<Severity>, C<Broken in>,
+and C<Fixed in> custom fields. The C<Configuration> section, below,
+describes how BugTracker administrators can configure these custom
+fields.
+
+The bug list search result page includes a link to the distribution's
+C<Manage> page. Distribution maintainers and BugTracker admins can set
+various attributes of the distribution here.
 
 =over 4
 
-=item Each queue associated with one package (distribution).
+=head2 Distribution notes
 
-=item Queue's AdminCc list is used for maintainers of the
-coresponding distribution.
+These notes appear at the top of the distribution's bug list.
+
+=head2 Additional addresses RT should notify
+
+RT::BugTracker installs a new Scrip, C<On create and corresponds
+notify additonal addresses>, that fires on distribution ticket
+creation and comment transactions. This Scrip sets the C<To:> header
+to the email addresses configured here.
+
+=head2 Subject tag in addition to default
+
+STUB: The additional subject tag is currently broken in 4.2/4.4. BPS will document this functionality when it is fixed.
 
 =back
 
