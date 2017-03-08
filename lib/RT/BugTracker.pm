@@ -53,7 +53,7 @@ use warnings;
 package RT::BugTracker;
 
 use 5.008003;
-our $VERSION = '5.2';
+our $VERSION = '5.3';
 
 =head1 NAME
 

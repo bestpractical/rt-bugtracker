@@ -1,3 +1,9 @@
+5.3 2017-03-08
+ - Add RT 4.2 and 4.4 compatibility
+ - Remove RT <=4.0 compatibility
+ - Add general functionality and configuration documentation
+ - Generalize site-specific configurations
+
 5.2 2014-12-18
  - Add no_index for core RT packages
  - Add repository metadata
