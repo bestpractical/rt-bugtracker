@@ -81,15 +81,6 @@ else {
 
 my $RSSFeedURL = $m->comp('SELF:RSS', Query => $Query );
 
-$Format ||= <<EOF;
-'<a href="$RT::WebPath/Ticket/Display.html?id=__id__">__id__</a>/TITLE:ID',
-'<b><a href="$RT::WebPath/Ticket/Display.html?id=__id__">__Subject__</a></b>/TITLE:Subject',
-'__Status__',
-'__CustomField.{Severity}__',
-'<small>__LastUpdatedRelative__</small>',
-'__CustomField.{Broken in}__',
-'__CustomField.{Fixed in}__'
-EOF
 </%INIT>
 <%ARGS>
 # object
@@ -97,7 +88,7 @@ $Queue
 $Status
 $ShowRSSLink => 1
 
-$Format  => undef
+$Format  => RT->Config->Get('BugTracker_SearchResultFormat')
 $OrderBy => 'LastUpdated'
 $Order   => 'DESC'
 $Rows    => undef

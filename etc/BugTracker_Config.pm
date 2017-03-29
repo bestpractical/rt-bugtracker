@@ -24,4 +24,14 @@ Set(%CustomFieldGroupings,
 
 Set(@BugTracker_CustomFieldsOnUpdate, 'Fixed in');
 
+Set($BugTracker_SearchResultFormat, <<EOF);
+    '<a href="__WebPath__/Ticket/Display.html?id=__id__">__id__</a>/TITLE:ID',
+    '<b><a href="__WebPath__/Ticket/Display.html?id=__id__">__Subject__</a></b>/TITLE:Subject',
+    '__Status__',
+    '__CustomField.{Severity}__',
+    '<small>__LastUpdatedRelative__</small>',
+    '__CustomField.{Broken in}__',
+    '__CustomField.{Fixed in}__'
+EOF
+
 1;

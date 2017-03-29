@@ -346,6 +346,12 @@ display on the ticket reply page for privileged users. By default it
 displays "Fixed in" to help maintainers quickly close out issues as the
 fixes are released.
 
+=head2 BugTracker_SearchResultFormat
+
+Use this config variable to specify the search result format for a
+distribution's list of tickets, much like C<DefaultSearchResultFormat>
+in core RT.
+
 =head2 Custom Fields
 
 By default, when you run C<make initdb>, RT::BugTracker creates three
@@ -375,7 +381,7 @@ admin will need top populate these values for each distribution.
 You may choose to skip creation of these custom fields by skipping the
 C<make initdb> step. If you would like to use your own custom fields,
 you should investigate setting the C<BugTracker_CustomFieldsOnUpdate>
-config option documented above.
+and C<BugTracker_SearchResultFormat> config options documented above.
 
 =head1 SEE ALSO
 
