@@ -22,4 +22,6 @@ Set(%CustomFieldGroupings,
     ],
 );
 
+Set(@BugTracker_CustomFieldsOnUpdate, 'Fixed in');
+
 1;

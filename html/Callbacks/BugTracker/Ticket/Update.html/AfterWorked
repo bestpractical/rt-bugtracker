@@ -45,13 +45,24 @@
 %# those contributions and any derivatives thereof.
 %#
 %# END BPS TAGGED BLOCK }}}
-<%args>
+<%ARGS>
 $Ticket
-</%args>
-<& /Ticket/Elements/EditCustomFields,
+</%ARGS>
+<%INIT>
+my @CFs = @{ RT->Config->Get('BugTracker_CustomFieldsOnUpdate') || [] };
+my $CFs = $Ticket->CustomFields;
+$CFs->Limit(
+    FIELD => 'Name',
+    OPERATOR => 'IN',
+    CASESENSITIVE => 0,
+    VALUE => \@CFs,
+) if @CFs;
+
+</%INIT>
+<& /Elements/EditCustomFields,
     %ARGS,
-    TicketObj   => $Ticket,
+    Object   => $Ticket,
     InTable     => 1,
     # Handled by our MassageCustomFields callback in the called component
-    Named       => ["Fixed in"],
+    CustomFields => $CFs,
     &>

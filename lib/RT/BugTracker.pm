@@ -275,6 +275,10 @@ May need root permissions
 
 =item C<make initdb>
 
+RT::BugTracker creates several custom fields for tracking bugs; you may skip
+this step if you intend to use different custom fields. See the section below
+on L<Custom Fields>.
+
 Only run this the first time you install this module.
 
 If you run this twice, you may end up with duplicate data
@@ -335,28 +339,43 @@ s/::/-/g
 The values above translate Perl module names into their email-friendly
 counterpart queue names.
 
-=head2 Custom Fields: Severity, Broken in, Fixed in
+=head2 BugTracker_CustomFieldsOnUpdate
 
-RT::BugTracker creates three custom fields on queues, globally, with
-empty values. The BugTracker administrator must populate the values of
-each of these custom fields.
+Use this config variable to specify a list of custom field names to
+display on the ticket reply page for privileged users. By default it
+displays "Fixed in" to help maintainers quickly close out issues as the
+fixes are released.
 
-=head3 Severity
+=head2 Custom Fields
+
+By default, when you run C<make initdb>, RT::BugTracker creates three
+custom fields on queues, globally, with empty values.
+
+=over 4
+
+=item Severity
 
 Bug severity levels, like 'Low', 'Medium', and 'High'.
 
-=head3 Broken in
+=item Broken in
 
 The distribution version where the bug in the ticket first
 appeared. Since each distribution will have different release
 versions, the BugTracker admin will need top populate these values for
 each distribution.
 
-=head3 Fixed in
+=item Fixed in
 
 The distribution version where the bug in the ticket was fixed. Since
 each distribution will have different release versions, the BugTracker
 admin will need top populate these values for each distribution.
+
+=back
+
+You may choose to skip creation of these custom fields by skipping the
+C<make initdb> step. If you would like to use your own custom fields,
+you should investigate setting the C<BugTracker_CustomFieldsOnUpdate>
+config option documented above.
 
 =head1 SEE ALSO
 
