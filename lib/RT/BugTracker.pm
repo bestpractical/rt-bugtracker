@@ -88,8 +88,6 @@ The bug list search result page includes a link to the distribution's
 C<Manage> page. Distribution maintainers and BugTracker admins can set
 various attributes of the distribution here.
 
-=over 4
-
 =head2 Distribution notes
 
 These notes appear at the top of the distribution's bug list.
@@ -104,8 +102,6 @@ to the email addresses configured here.
 =head2 Subject tag in addition to default
 
 STUB: The additional subject tag is currently broken in 4.2/4.4. BPS will document this functionality when it is fixed.
-
-=back
 
 =cut
 
@@ -352,12 +348,12 @@ Use this config variable to specify the search result format for a
 distribution's list of tickets, much like C<DefaultSearchResultFormat>
 in core RT.
 
-=item2 BugTracker_HideBrowseDistributions
+=head2 BugTracker_HideBrowseDistributions
 
 Use this config variable to suppress the alphabetical distribution browser
 UI, for users with fewer than tens of thousands of queues. :)
 
-=item2 BugTracker_ShowAllDistributions
+=head2 BugTracker_ShowAllDistributions
 
 Use this config variable to always display all distributions, for users
 with fewer than hundreds of queues. :)
