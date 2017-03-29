@@ -49,6 +49,7 @@
 <& /Elements/Tabs &>
 
 <p>
+% unless (RT->Config->Get('BugTracker_ShowAllDistributions')) {
   <form action="/Dist/Display.html" method="get">
     <label for="form-dist-name"><&|/l&>Find a distribution by full name:</&></label>
     <input type="text" name="Queue" id="form-dist-name" data-autocomplete="Queues" data-autocomplete-autosubmit=1 />
@@ -71,6 +72,7 @@
     <input type="submit" class="button" value="<&|/l&>Search</&>" />
   </form>
 </p>
+% }
 
 <p>
   <form action="/Search/Simple.html" method="get">
@@ -82,4 +84,10 @@
   <&|/l&>This search looks for bug report IDs, distribution names, usernames, and bug report descriptions among other fields.</&>
 </p>
 
+% if (RT->Config->Get('BugTracker_ShowAllDistributions')) {
+<h2><&|/l&>Distributions</&></h2>
 
+% my $queues = RT::Queues->new($session{CurrentUser});
+% $queues->UnLimit;
+    <& /Dist/Elements/DistributionList, queues => $queues &>
+% }

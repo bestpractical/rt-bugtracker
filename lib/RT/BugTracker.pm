@@ -357,6 +357,11 @@ in core RT.
 Use this config variable to suppress the alphabetical distribution browser
 UI, for users with fewer than tens of thousands of queues. :)
 
+=item2 BugTracker_ShowAllDistributions
+
+Use this config variable to always display all distributions, for users
+with fewer than hundreds of queues. :)
+
 =head2 Custom Fields
 
 By default, when you run C<make initdb>, RT::BugTracker creates three
