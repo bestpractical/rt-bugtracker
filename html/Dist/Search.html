@@ -48,8 +48,8 @@
 <& /Elements/Header, Title => loc("Public Bug Tracker") &>
 <& /Elements/Tabs &>
 
-<p>
 % unless (RT->Config->Get('BugTracker_ShowAllDistributions')) {
+<p>
   <form action="/Dist/Display.html" method="get">
     <label for="form-dist-name"><&|/l&>Find a distribution by full name:</&></label>
     <input type="text" name="Queue" id="form-dist-name" data-autocomplete="Queues" data-autocomplete-autosubmit=1 />
