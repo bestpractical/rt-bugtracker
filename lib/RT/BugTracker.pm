@@ -352,6 +352,11 @@ Use this config variable to specify the search result format for a
 distribution's list of tickets, much like C<DefaultSearchResultFormat>
 in core RT.
 
+=item2 BugTracker_HideBrowseDistributions
+
+Use this config variable to suppress the alphabetical distribution browser
+UI, for users with fewer than tens of thousands of queues. :)
+
 =head2 Custom Fields
 
 By default, when you run C<make initdb>, RT::BugTracker creates three

@@ -66,10 +66,12 @@ $tracker->child(
     path        => '/Dist/Search.html',
 );
 
-$tracker->child(
-    browse => title => loc('Browse'),
-    path        => '/Dist/Browse.html',
-);
+unless (RT->Config->Get('BugTracker_HideBrowseDistributions')) {
+    $tracker->child(
+        browse => title => loc('Browse'),
+        path        => '/Dist/Browse.html',
+    );
+}
 
 my $request_path = $HTML::Mason::Commands::r->path_info;
 $request_path =~ s!^/{2,}!/!;
