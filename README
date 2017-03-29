@@ -49,6 +49,10 @@ INSTALLATION
         May need root permissions
 
     make initdb
+        RT::BugTracker creates several custom fields for tracking bugs; you
+        may skip this step if you intend to use different custom fields. See
+        the section below on "Custom Fields".
+
         Only run this the first time you install this module.
 
         If you run this twice, you may end up with duplicate data in your
@@ -101,24 +105,48 @@ CONFIGURATION
     The values above translate Perl module names into their email-friendly
     counterpart queue names.
 
-  Custom Fields: Severity, Broken in, Fixed in
-    RT::BugTracker creates three custom fields on queues, globally, with
-    empty values. The BugTracker administrator must populate the values of
-    each of these custom fields.
+  BugTracker_CustomFieldsOnUpdate
+    Use this config variable to specify a list of custom field names to
+    display on the ticket reply page for privileged users. By default it
+    displays "Fixed in" to help maintainers quickly close out issues as the
+    fixes are released.
 
-   Severity
-    Bug severity levels, like 'Low', 'Medium', and 'High'.
+  BugTracker_SearchResultFormat
+    Use this config variable to specify the search result format for a
+    distribution's list of tickets, much like DefaultSearchResultFormat in
+    core RT.
 
-   Broken in
-    The distribution version where the bug in the ticket first appeared.
-    Since each distribution will have different release versions, the
-    BugTracker admin will need top populate these values for each
-    distribution.
+  BugTracker_HideBrowseDistributions
+    Use this config variable to suppress the alphabetical distribution
+    browser UI, for users with fewer than tens of thousands of queues. :)
 
-   Fixed in
-    The distribution version where the bug in the ticket was fixed. Since
-    each distribution will have different release versions, the BugTracker
-    admin will need top populate these values for each distribution.
+  BugTracker_ShowAllDistributions
+    Use this config variable to always display all distributions, for users
+    with fewer than hundreds of queues. :)
+
+  Custom Fields
+    By default, when you run make initdb, RT::BugTracker creates three
+    custom fields on queues, globally, with empty values.
+
+    Severity
+        Bug severity levels, like 'Low', 'Medium', and 'High'.
+
+    Broken in
+        The distribution version where the bug in the ticket first appeared.
+        Since each distribution will have different release versions, the
+        BugTracker admin will need top populate these values for each
+        distribution.
+
+    Fixed in
+        The distribution version where the bug in the ticket was fixed.
+        Since each distribution will have different release versions, the
+        BugTracker admin will need top populate these values for each
+        distribution.
+
+    You may choose to skip creation of these custom fields by skipping the
+    make initdb step. If you would like to use your own custom fields, you
+    should investigate setting the BugTracker_CustomFieldsOnUpdate and
+    BugTracker_SearchResultFormat config options documented above.
 
 SEE ALSO
     RT::BugTracker::Public, RT::Extension::rt_cpan_org
@@ -141,14 +169,4 @@ LICENSE AND COPYRIGHT
     This is free software, licensed under:
 
       The GNU General Public License, Version 2, June 1991
-
-POD ERRORS
-    Hey! The above document had some coding errors, which are explained
-    below:
-
-    Around line 93:
-        You forgot a '=back' before '=head2'
-
-    Around line 108:
-        =back without =over
 

@@ -9,5 +9,4 @@ rt_too_new('4.6.0');
 
 no_index( package => 'RT::Queue' );
 
-sign();
 WriteAll();
