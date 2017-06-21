@@ -51,7 +51,21 @@ my $escaped_uname = $m->interp->apply_escapes(
     $session{'CurrentUser'}->UserObj->Name, 'u'
 );
 
-my $tracker = Menu->child("search")->add_after(
+my $request_path = $HTML::Mason::Commands::r->path_info;
+$request_path =~ s!^/{2,}!/!;
+
+my $menu = Menu->child("search")
+        || Menu->child("tickets");
+
+# only include distributions in self-service menu if BugTracker's urls are
+# accessible to unprivileged users
+if ($request_path =~ RT->Config->Get('SelfServiceRegex')) {
+    if ("/Dist/Search.html" !~ RT->Config->Get('SelfServiceRegex')) {
+        return;
+    }
+}
+
+my $tracker = $menu->add_after(
     bugtracker => title => loc('Distributions'),
     path => '/Dist/ByMaintainer.html?Name=' . $escaped_uname,
 );
@@ -73,8 +87,6 @@ unless (RT->Config->Get('BugTracker_HideBrowseDistributions')) {
     );
 }
 
-my $request_path = $HTML::Mason::Commands::r->path_info;
-$request_path =~ s!^/{2,}!/!;
 if ( $request_path =~ m{^/Dist/(?:Display|Manage)\.html} ) {
     my $Queue = $DECODED_ARGS->{'Name'} || $DECODED_ARGS->{'Queue'};
 
