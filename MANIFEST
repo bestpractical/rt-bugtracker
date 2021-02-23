@@ -32,6 +32,7 @@ html/Dist/Manage.html
 html/Dist/Search.html
 html/Elements/ErrorNoDist
 html/Elements/ErrorNoUser
+html/Elements/TicketList
 html/NoAuth/css/bugtracker.css
 html/Ticket/Elements/ShowQueue
 inc/Module/Install.pm
