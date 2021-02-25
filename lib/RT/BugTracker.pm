@@ -105,8 +105,6 @@ STUB: The additional subject tag is currently broken in 4.2/4.4. BPS will docume
 
 =cut
 
-RT->AddStyleSheets("bugtracker.css");
-
 require RT::Queue;
 package RT::Queue;
 

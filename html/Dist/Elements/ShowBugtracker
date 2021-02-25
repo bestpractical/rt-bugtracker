@@ -46,7 +46,7 @@
 %#
 %# END BPS TAGGED BLOCK }}}
 % if ( defined $bugtracker ) {
-<div id="external_bugtracker">
+<div id="external_bugtracker" class="alert alert-warning mt-2">
 <h3><% loc("Preferred bug tracker") %></h3>
 %
 % if ( defined $bugtracker->{mailto} ) {

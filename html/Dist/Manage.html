@@ -53,16 +53,21 @@
 
 <& /Elements/ListActions, actions => \@results &>
 
-<form action="<% $RT::WebPath %><% $m->request_comp->path %>" method="post">
+<form action="<% $RT::WebPath %><% $m->request_comp->path %>" method="post" class="mx-auto max-width-lg">
 <input type="hidden" class="hidden" name="Queue" value="<% $QueueObj->Name %>" />
-
+<&| /Widgets/TitleBox, class => 'queue-info-basics', content_class => 'mx-auto width-lg' &>
 <& /Dist/Elements/EditNotes, Queue => $QueueObj &>
 
 <& /Dist/Elements/EditNotifyAddresses, Queue => $QueueObj &>
 
 <& /Dist/Elements/EditSubjectTag, Queue => $QueueObj &>
+</&>
 
-<& /Elements/Submit, Label => loc('Save Changes'), Name => 'Update' &>
+<div class="form-row">
+  <div class="col-12">
+    <& /Elements/Submit, Label => loc('Save Changes'), Name => 'Update' &>
+  </div>
+</div>
 
 </form>
 <%INIT>

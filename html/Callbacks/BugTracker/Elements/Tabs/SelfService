@@ -114,7 +114,7 @@ if ( $request_path =~ m{^/Dist/(?:Display|Manage)\.html} ) {
         );
         PageMenu()->child(
             active => title => loc("Active bugs"),
-            path => "/Dist/Display.html?Status=Active;Queue=" . $escaped_queue,
+            path => "/Dist/Display.html?Status=__Active__;Queue=" . $escaped_queue,
         );
 
         PageMenu()->child(

@@ -77,7 +77,18 @@ unless ( $QueueObj->id ) {
 }
 $ARGS{'Name'} = $Name = $QueueObj->Name;
 
-my $title = loc( "$Status bugs for [_1]", $Name );
+my $status_text;
+if ( $Status =~ /__active__/i ) {
+    $status_text = loc('Active');
+}
+elsif ( $Status =~ /__inactive__/i ) {
+    $status_text = loc('Inactive');
+}
+else {
+    $status_text = $Status;
+}
+
+my $title = loc( "[_1] bugs for [_2]", $status_text, $Name );
 
 my $current_subtab = "Dist/Display.html"
     ."?Status=". $m->interp->apply_escapes($Status, 'u')
@@ -96,5 +107,5 @@ my $RSSFeedURL = $m->comp('/Dist/Elements/ShowBugs:RSS',
 $Name   => undef
 # Queue is an alias for Name, Name has higher precendance
 $Queue  => undef
-$Status => 'Active'
+$Status => '__Active__'
 </%ARGS>

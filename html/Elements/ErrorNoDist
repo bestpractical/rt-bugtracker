@@ -48,7 +48,7 @@
 <& /Elements/Header, Title => loc("Error") &>
 <& /Elements/Tabs, Title => loc("Unable to find distribution") &>
 
-<p>
+<p class="mt-2">
 % if ($Queue) {
   The distribution you specified, <strong><% $Queue %></strong>, could not be found.
 % }
