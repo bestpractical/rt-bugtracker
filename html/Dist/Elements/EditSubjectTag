@@ -2,7 +2,7 @@
 %#
 %# COPYRIGHT:
 %#
-%# This software is Copyright (c) 1996-2014 Best Practical Solutions, LLC
+%# This software is Copyright (c) 1996-2017 Best Practical Solutions, LLC
 %#                                          <sales@bestpractical.com>
 %#
 %# (Except where explicitly superseded by other copyright notices)
@@ -46,7 +46,7 @@
 %#
 %# END BPS TAGGED BLOCK }}}
 <label class="dist-subjecttag"><% loc('Subject tag in addition to default') %>
-(<% loc('be reasonable') %>, <code><% RT->Config->Get("DistributionSubjectTagAllowed") %></code> is allowed, <code>rt.cpan.org</code> will be prepended):
+(<% loc('be reasonable') %>, <code><% RT->Config->Get("DistributionSubjectTagAllowed") %></code> is allowed, <code><% RT->Config->Get("WebDomain") %></code> will be prepended):
 <input size="120" name="Queue-<% $Queue->id %>-SubjectTag" value="<% $value || '' %>" /></label><br />
 <%ARGS>
 $Queue => undef
