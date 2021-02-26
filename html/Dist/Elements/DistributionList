@@ -55,7 +55,7 @@
 % 
 %     if ($count > 10
 %           and not $broken
-%           and $queues->_ItemsCounter >= $count / 2)
+%           and $queues->_ItemsCounter > $count / 2)
 %     {
 %         $broken = 1;
     </ul>
