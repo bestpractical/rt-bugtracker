@@ -1,3 +1,6 @@
+5.6 2021-03-15
+ - Migrate to RT 5
+
 5.5 2017-06-21
  - Avoid breaking self-service UI
 
